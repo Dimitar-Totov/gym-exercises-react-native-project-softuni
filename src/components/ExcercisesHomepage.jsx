@@ -6,7 +6,7 @@ export default function ExcercisesHomepage(props) {
             {props.searchedText.length === 0
                 ? <Text style={{ fontSize: 25, fontFamily: 'monospace', }}>No matches found</Text>
                 : props.searchedText.map(e => (
-                    <View style={{ width: '100%', alignItems: 'center', marginBottom: 20 }}>
+                    <View key={e.title} style={{ width: '100%', alignItems: 'center', marginBottom: 20 }}>
                         <Image style={{ width: 250, height: 200, resizeMode: 'contain' }} source={{ uri: e.imageUrl }} />
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '83%' }}>
                             <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{e.title}</Text>
