@@ -4,7 +4,11 @@ import { Smartphone, Mail, MapPin } from 'lucide-react-native';
 
 const { width } = Dimensions.get("window");
 
-export default function AboutScreen({ navigation }) {
+export default function InfoScreen({ navigation }) {
+
+    const aboutPressHandler = () => {
+        navigation.navigate('About Us')
+    }
     return (
         <ScrollView>
             <View style={style.container}>
@@ -42,7 +46,7 @@ export default function AboutScreen({ navigation }) {
                     </View>
                 </View>
                 <View style={style.aboutUsContainer}>
-                    <TouchableOpacity style={{width: '100%', alignItems: 'center'}}>
+                    <TouchableOpacity onPress={aboutPressHandler} style={{ width: '100%', alignItems: 'center' }}>
                         <View style={style.aboutUs}>
                             <Text style={{ fontSize: 30, fontWeight: 'bold', fontFamily: 'serif', color: '#fff' }}>About Us</Text>
                         </View>

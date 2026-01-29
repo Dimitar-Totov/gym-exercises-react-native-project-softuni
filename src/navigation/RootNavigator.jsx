@@ -4,8 +4,8 @@ import { House, Dumbbell, Info, CircleUserRound } from "lucide-react-native";
 
 import HomeScreen from "../screens/HomeScreen";
 import CatalogScreen from "../screens/CatalogScreen";
-import AboutScreen from "../screens/AboutScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import InfoNavigator from "./InfoNavigator";
 
 export default function RootNavigator() {
 
@@ -29,7 +29,7 @@ export default function RootNavigator() {
             />
             <Tabs.Screen
                 name="Info"
-                component={AboutScreen}
+                component={InfoNavigator}
                 options={{
                     tabBarIcon: () => <Info />,
                 }}
