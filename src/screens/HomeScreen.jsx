@@ -14,7 +14,7 @@ export default function HomeScreen() {
     const filteredData = useMemo(() => data.exercises.filter(item => text === '' ? '' : item.title.toLocaleLowerCase().includes(text.toLocaleLowerCase())), [text]);
 
     return (
-        <SafeAreaView style={{ flex: 1}} edges={[]}>
+        <SafeAreaView style={{ flex: 1 }} edges={[]}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <KeyboardAvoidingView
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -32,7 +32,7 @@ export default function HomeScreen() {
                             <View style={{ alignItems: 'center', marginTop: 25, width: '100%' }}>
                                 <TextInput onChangeText={changeText} value={text} placeholder='Search about some exercise' style={style.homescreenSearch} />
                                 {text ?
-                                    <TouchableOpacity style={style.clearInput} onPress={() => changeText('')}>
+                                    <TouchableOpacity style={style.clearInput} hitSlop={10} onPress={() => changeText('')}>
                                         <X />
                                     </TouchableOpacity>
                                     : ''
