@@ -15,7 +15,7 @@ export default function InfoScreen({ navigation }) {
                 <Text style={style.welcomeText}>Progress Starts Here</Text>
                 <View style={style.content}>
                     <View style={style.welcomeImageContainer}>
-                        <Image style={style.welcomeImage} source={require('../../assets/about.jpg')} />
+                        <Image style={style.welcomeImage} source={require('../../assets/info.jpg')} />
                     </View>
                     <View style={[style.phone, style.infoContainers]}>
                         <View>
@@ -109,15 +109,14 @@ const style = StyleSheet.create({
     },
     aboutUsContainer: {
         backgroundColor: '#fff',
-        paddingTop: 20,
-        paddingBottom: 20,
+        paddingTop: 5,
+        paddingBottom: 5,
         alignItems: 'center',
     },
     aboutUs: {
         backgroundColor: '#30e418',
-        width: '95%',
+        width: '97%',
         alignItems: 'center',
-        paddingBlock: 20,
-        borderRadius: 5
+        paddingBlock: 10,
     }
 })
