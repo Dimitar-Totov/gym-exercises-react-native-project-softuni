@@ -12,7 +12,6 @@ export default function InfoScreen({ navigation }) {
     return (
         <ScrollView>
             <View style={style.container}>
-                <Text style={style.welcomeText}>Progress Starts Here</Text>
                 <View style={style.content}>
                     <View style={style.welcomeImageContainer}>
                         <Image style={style.welcomeImage} source={require('../../assets/info.jpg')} />
@@ -48,7 +47,7 @@ export default function InfoScreen({ navigation }) {
                 <View style={style.aboutUsContainer}>
                     <TouchableOpacity onPress={aboutPressHandler} style={{ width: '100%', alignItems: 'center' }}>
                         <View style={style.aboutUs}>
-                            <Text style={{ fontSize: 30, fontWeight: 'bold', fontFamily: 'serif', color: '#fff' }}>About Us</Text>
+                            <Text style={{ fontSize: 30, fontWeight: 'bold', fontFamily: 'serif', color: '#fff' }}>Learn more</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -59,21 +58,11 @@ export default function InfoScreen({ navigation }) {
 
 const style = StyleSheet.create({
     container: {
-        backgroundColor: '#30e418',
+        backgroundColor: '#fff',
         flex: 1
     },
-    welcomeText: {
-        position: 'absolute',
-        top: 55,
-        right: 0,
-        fontSize: 40,
-        fontFamily: Platform.OS === 'ios' ? 'Georgia' : 'serif',
-        color: '#fff',
-        fontWeight: 800,
-        textAlign: 'center'
-    },
     content: {
-        marginTop: 170,
+        // marginTop: 170,
         backgroundColor: '#faf2f2',
         alignItems: 'center'
     },
@@ -114,7 +103,7 @@ const style = StyleSheet.create({
         alignItems: 'center',
     },
     aboutUs: {
-        backgroundColor: '#30e418',
+        backgroundColor: '#2ec61a',
         width: '97%',
         alignItems: 'center',
         paddingBlock: 10,
