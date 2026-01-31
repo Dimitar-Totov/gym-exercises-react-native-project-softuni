@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, ScrollView, Dimensions, Platform, TouchableOpacity } from "react-native";
 
 import { Smartphone, Mail, MapPin } from 'lucide-react-native';
+import MapView, { Marker } from "react-native-maps";
 
 const { width } = Dimensions.get("window");
 
@@ -11,58 +12,75 @@ export default function InfoScreen({ navigation }) {
     }
     return (
         <ScrollView>
-            <View style={style.container}>
-                <View style={style.content}>
-                    <View style={style.welcomeImageContainer}>
-                        <Image style={style.welcomeImage} source={require('../../assets/info.jpg')} />
+            <View style={styles.container}>
+                <View style={styles.content}>
+                    <View style={styles.welcomeImageContainer}>
+                        <Image style={styles.welcomeImage} source={require('../../assets/info.jpg')} />
                     </View>
-                    <View style={[style.phone, style.infoContainers]}>
+                    <View style={[styles.phone, styles.infoContainers]}>
                         <View>
                             < Smartphone size={30} style={{ color: '#30e418' }} />
                         </View>
-                        <View style={style.textContainer}>
-                            <Text style={style.primaryText}>Give us a call</Text>
-                            <Text style={style.secondaryText}>+359 123 440 621</Text>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.primaryText}>Give us a call</Text>
+                            <Text style={styles.secondaryText}>+359 123 440 621</Text>
                         </View>
                     </View>
-                    <View style={[style.mail, style.infoContainers]}>
+                    <View style={[styles.mail, styles.infoContainers]}>
                         <View>
                             < Mail size={30} style={{ color: '#30e418' }} />
                         </View>
-                        <View style={style.textContainer}>
-                            <Text style={style.primaryText}>Send us a message</Text>
-                            <Text style={style.secondaryText}>example@gmail.com</Text>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.primaryText}>Send us a message</Text>
+                            <Text style={styles.secondaryText}>example@gmail.com</Text>
                         </View>
                     </View>
-                    <View style={[style.location, style.infoContainers]}>
+                    <View style={[styles.location, styles.infoContainers]}>
                         <View>
                             < MapPin size={30} style={{ color: '#30e418' }} />
                         </View>
-                        <View style={style.textContainer}>
-                            <Text style={style.primaryText}>Visit our location</Text>
-                            <Text style={style.secondaryText}>Example, Bulgaria</Text>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.primaryText}>Visit our location</Text>
+                            <Text style={styles.secondaryText}>Example, Bulgaria</Text>
                         </View>
                     </View>
                 </View>
-                <View style={style.aboutUsContainer}>
+                <View style={styles.aboutUsContainer}>
                     <TouchableOpacity onPress={aboutPressHandler} style={{ width: '100%', alignItems: 'center' }}>
-                        <View style={style.aboutUs}>
+                        <View style={styles.aboutUs}>
                             <Text style={{ fontSize: 30, fontWeight: 'bold', fontFamily: 'serif', color: '#fff' }}>Learn more</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
+                <MapView
+                    style={styles.map}
+                    initialRegion={{
+                        latitude: 42.6977,
+                        longitude: 23.3219,
+                        latitudeDelta: 0.05,
+                        longitudeDelta: 0.05,
+                    }}
+                >
+                    <Marker
+                        coordinate={{
+                            latitude: 42.6977,
+                            longitude: 23.3219,
+                        }}
+                        title="Our Location"
+                        description="Sofia, Bulgaria"
+                    />
+                </MapView>
             </View>
         </ScrollView >
     )
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
         flex: 1
     },
     content: {
-        // marginTop: 170,
         backgroundColor: '#faf2f2',
         alignItems: 'center'
     },
@@ -107,5 +125,9 @@ const style = StyleSheet.create({
         width: '97%',
         alignItems: 'center',
         paddingBlock: 10,
+    },
+    map: {
+        width: width,
+        height: width
     }
 })
