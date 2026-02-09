@@ -1,4 +1,4 @@
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, StyleSheet } from 'react-native';
 
 export default function ExcercisesHomepage(props) {
     return (
@@ -6,15 +6,23 @@ export default function ExcercisesHomepage(props) {
             {props.searchedText.length === 0
                 ? <Text style={{ fontSize: 25, fontFamily: 'monospace', }}>No matches found</Text>
                 : props.searchedText.map(e => (
-                    <View key={e.title} style={{ width: '100%', alignItems: 'center', marginBottom: 20 }}>
-                        <Image style={{ width: 250, height: 200, resizeMode: 'contain' }} source={{ uri: e.imageUrl }} />
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '83%' }}>
-                            <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{e.title}</Text>
-                            <Text style={{ fontFamily: 'sans-serif-light', fontStyle: 'italic' }}>Learn more...</Text>
+                    <View key={e.title} style={styles.container}>
+                        <Image style={{ resizeMode: 'cover', width: '80%', height: '100%' }} source={{ uri: e.imageUrl }} />
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '83%', paddingBlock: 10, alignItems: 'center', }}>
+                            <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#04b625' }}>{e.title}</Text>
+                            <Text style={{ fontFamily: 'sans-serif-light', fontStyle: 'italic', fontSize: 15 }}>Learn more...</Text>
                         </View>
                     </View>
                 ))}
         </View>
-
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        width: '100%',
+        height: 250,
+        alignItems: 'center',
+        marginBottom: 70,
+    }
+})

@@ -38,7 +38,7 @@ export default function HomeScreen({ navigation, route }) {
                                 }
                                 {text ? <ExcercisesHomepage searchedText={filteredData} /> : ''}
                             </View>
-                            <PopularExercises />
+                            <PopularExercises navigation={navigation} />
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>

@@ -1,11 +1,16 @@
-import { Text, View, Image, Button, StyleSheet } from 'react-native';
+import { Text, View, Image, Button, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function PopularExercises() {
+export default function PopularExercises({ navigation }) {
+
+    const viewAllPressHandler = () => navigation.navigate('Catalog');
+
     return (
         <View style={{ justifyContent: 'center', marginTop: 25 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginBottom: 20 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginBottom: 20, alignItems: 'center' }}>
                 <Text style={{ fontSize: 30 }}>Popular Exercises</Text>
-                <Button title='View all'></Button>
+                <TouchableOpacity onPress={viewAllPressHandler} style={{ backgroundColor: '#65da5a', paddingInline: 15, paddingBlock: 10, borderRadius: 5 }}>
+                    <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>View All</Text>
+                </TouchableOpacity>
             </View>
             <View style={{ flexDirection: 'columns', justifyContent: 'center' }}>
                 <View style={style.popularExerciseCardContainer}>
