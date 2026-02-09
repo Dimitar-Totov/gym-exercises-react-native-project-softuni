@@ -21,7 +21,6 @@ export default function AboutUs() {
                             Balancing study with outdoor activities helps me stay focused, energized, and inspired in both personal and professional growth.
                         </Text>
                     </View>
-
                 </View>
             </View>
         </ScrollView>

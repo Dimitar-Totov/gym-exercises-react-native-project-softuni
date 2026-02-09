@@ -4,169 +4,196 @@
             "title": "Bench Press",
             "description": "The bench press is a weight training exercise where a person presses a weight upwards while lying horizontally on a weight training bench.The bench press is a compound movement, with the primary muscles involved being the pectoralis major,the anterior deltoids, and the triceps brachii",
             "imageUrl": "https://gymgeek.com/wp-content/uploads/2024/02/bench-press-square.png",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "chest"
         },
         {
             "title": "Incline Bench Press",
             "description": "The bench press is a weight training exercise where a person presses a weight upwards while lying horizontally on a weight training bench.The bench press is a compound movement, with the primary muscles involved being the pectoralis major,the anterior deltoids, and the triceps brachii",
             "imageUrl": "https://gymgeek.com/wp-content/uploads/2024/02/bench-press-square.png",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "chest"
         },
         {
             "title": "Decline Bench Press",
             "description": "The bench press is a weight training exercise where a person presses a weight upwards while lying horizontally on a weight training bench.The bench press is a compound movement, with the primary muscles involved being the pectoralis major,the anterior deltoids, and the triceps brachii",
             "imageUrl": "https://gymgeek.com/wp-content/uploads/2024/02/bench-press-square.png",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "chest"
         },
         {
             "title": "Dumbbell Bench Press",
             "description": "The bench press is a weight training exercise where a person presses a weight upwards while lying horizontally on a weight training bench.The bench press is a compound movement, with the primary muscles involved being the pectoralis major,the anterior deltoids, and the triceps brachii",
             "imageUrl": "https://gymgeek.com/wp-content/uploads/2024/02/bench-press-square.png",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "chest"
         },
         {
             "title": "Chest Fly",
             "description": "The bench press is a weight training exercise where a person presses a weight upwards while lying horizontally on a weight training bench.The bench press is a compound movement, with the primary muscles involved being the pectoralis major,the anterior deltoids, and the triceps brachii",
             "imageUrl": "https://gymgeek.com/wp-content/uploads/2024/02/bench-press-square.png",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "chest"
         },
         {
             "title": "Cable Fly",
             "description": "The bench press is a weight training exercise where a person presses a weight upwards while lying horizontally on a weight training bench.The bench press is a compound movement, with the primary muscles involved being the pectoralis major,the anterior deltoids, and the triceps brachii",
             "imageUrl": "https://gymgeek.com/wp-content/uploads/2024/02/bench-press-square.png",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "chest"
         },
         {
             "title": "Push-Ups",
             "description": "The bench press is a weight training exercise where a person presses a weight upwards while lying horizontally on a weight training bench.The bench press is a compound movement, with the primary muscles involved being the pectoralis major,the anterior deltoids, and the triceps brachii",
             "imageUrl": "https://gymgeek.com/wp-content/uploads/2024/02/bench-press-square.png",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "chest"
         },
         {
             "title": "Dips (Chest Version)",
             "description": "The bench press is a weight training exercise where a person presses a weight upwards while lying horizontally on a weight training bench.The bench press is a compound movement, with the primary muscles involved being the pectoralis major,the anterior deltoids, and the triceps brachii",
             "imageUrl": "https://gymgeek.com/wp-content/uploads/2024/02/bench-press-square.png",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "chest"
         },
         {
             "title": "Machine Chest Press",
             "description": "The bench press is a weight training exercise where a person presses a weight upwards while lying horizontally on a weight training bench.The bench press is a compound movement, with the primary muscles involved being the pectoralis major,the anterior deltoids, and the triceps brachii",
             "imageUrl": "https://gymgeek.com/wp-content/uploads/2024/02/bench-press-square.png",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "chest"
         },
         {
             "title": "Pull Up",
             "description": "A pull-up is an upper-body strength exercise. The pull-up is a closed-chain movement where the body is suspended by the hands, gripping a bar or other implement at a distance typically wider than shoulder-width, and pulled up. As this happens, the elbows flex and the shoulders adduct and extend to bring the elbows to the torso.",
             "imageUrl": "https://thumbs.dreamstime.com/b/man-doing-pull-ups-exercise-flat-vector-illustration-man-doing-pull-ups-exercise-flat-vector-illustration-isolated-white-228445780.jpg",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "back"
         },
         {
             "title": "Deadlift",
             "description": "A pull-up is an upper-body strength exercise. The pull-up is a closed-chain movement where the body is suspended by the hands, gripping a bar or other implement at a distance typically wider than shoulder-width, and pulled up. As this happens, the elbows flex and the shoulders adduct and extend to bring the elbows to the torso.",
             "imageUrl": "https://thumbs.dreamstime.com/b/man-doing-pull-ups-exercise-flat-vector-illustration-man-doing-pull-ups-exercise-flat-vector-illustration-isolated-white-228445780.jpg",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "back"
         },
         {
             "title": "Chin-Ups",
             "description": "A pull-up is an upper-body strength exercise. The pull-up is a closed-chain movement where the body is suspended by the hands, gripping a bar or other implement at a distance typically wider than shoulder-width, and pulled up. As this happens, the elbows flex and the shoulders adduct and extend to bring the elbows to the torso.",
             "imageUrl": "https://thumbs.dreamstime.com/b/man-doing-pull-ups-exercise-flat-vector-illustration-man-doing-pull-ups-exercise-flat-vector-illustration-isolated-white-228445780.jpg",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "back"
         },
         {
             "title": "Lat Pulldown",
             "description": "A pull-up is an upper-body strength exercise. The pull-up is a closed-chain movement where the body is suspended by the hands, gripping a bar or other implement at a distance typically wider than shoulder-width, and pulled up. As this happens, the elbows flex and the shoulders adduct and extend to bring the elbows to the torso.",
             "imageUrl": "https://thumbs.dreamstime.com/b/man-doing-pull-ups-exercise-flat-vector-illustration-man-doing-pull-ups-exercise-flat-vector-illustration-isolated-white-228445780.jpg",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "back"
         },
         {
             "title": "Bent Over Row",
             "description": "A pull-up is an upper-body strength exercise. The pull-up is a closed-chain movement where the body is suspended by the hands, gripping a bar or other implement at a distance typically wider than shoulder-width, and pulled up. As this happens, the elbows flex and the shoulders adduct and extend to bring the elbows to the torso.",
             "imageUrl": "https://thumbs.dreamstime.com/b/man-doing-pull-ups-exercise-flat-vector-illustration-man-doing-pull-ups-exercise-flat-vector-illustration-isolated-white-228445780.jpg",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "back"
         },
         {
             "title": "T-Bar Row",
             "description": "A pull-up is an upper-body strength exercise. The pull-up is a closed-chain movement where the body is suspended by the hands, gripping a bar or other implement at a distance typically wider than shoulder-width, and pulled up. As this happens, the elbows flex and the shoulders adduct and extend to bring the elbows to the torso.",
             "imageUrl": "https://thumbs.dreamstime.com/b/man-doing-pull-ups-exercise-flat-vector-illustration-man-doing-pull-ups-exercise-flat-vector-illustration-isolated-white-228445780.jpg",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "back"
         },
         {
             "title": "Seated Cable Row",
             "description": "A pull-up is an upper-body strength exercise. The pull-up is a closed-chain movement where the body is suspended by the hands, gripping a bar or other implement at a distance typically wider than shoulder-width, and pulled up. As this happens, the elbows flex and the shoulders adduct and extend to bring the elbows to the torso.",
             "imageUrl": "https://thumbs.dreamstime.com/b/man-doing-pull-ups-exercise-flat-vector-illustration-man-doing-pull-ups-exercise-flat-vector-illustration-isolated-white-228445780.jpg",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "back"
         },
         {
             "title": "Single Arm Dumbbell Row",
             "description": "A pull-up is an upper-body strength exercise. The pull-up is a closed-chain movement where the body is suspended by the hands, gripping a bar or other implement at a distance typically wider than shoulder-width, and pulled up. As this happens, the elbows flex and the shoulders adduct and extend to bring the elbows to the torso.",
             "imageUrl": "https://thumbs.dreamstime.com/b/man-doing-pull-ups-exercise-flat-vector-illustration-man-doing-pull-ups-exercise-flat-vector-illustration-isolated-white-228445780.jpg",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "back"
         },
         {
             "title": "Hyperextensions",
             "description": "A pull-up is an upper-body strength exercise. The pull-up is a closed-chain movement where the body is suspended by the hands, gripping a bar or other implement at a distance typically wider than shoulder-width, and pulled up. As this happens, the elbows flex and the shoulders adduct and extend to bring the elbows to the torso.",
             "imageUrl": "https://thumbs.dreamstime.com/b/man-doing-pull-ups-exercise-flat-vector-illustration-man-doing-pull-ups-exercise-flat-vector-illustration-isolated-white-228445780.jpg",
-            "type": "upper"
+            "type": "upper",
+            "muscleGroup": "back"
         },
         {
             "title": "Abdominal Exercises",
             "description": "Abdominal exercises are strength exercise affecting the abdominal muscles(colloquially known as the stomach muscles or abs). The human abdominal muscular set consists of four: the rectus abdominis,internal oblique, external oblique, and transversus abdominis. During the execution of abdominal training, understanding the functions, effects, and variations in exercise, along with considering the suitability, and safety in realtion to current physical condition is cruicial, as overtraining can lead to severe injury.",
             "imageUrl": "https://www.shutterstock.com/image-vector/man-doing-modified-crunches-abdominals-600nw-2290766945.jpg",
-            "type": "upper"
+            "type": "abs"
         },
         {
             "title": "Squat",
             "description": "A squat is a fundamental compound strength exercise targeting the quadriceps, hamstrings, and glutes, performed by lowering the hips from a standing position and standing back up. It improves lower-body strength, balance, and mobility. ",
             "imageUrl": "https://sportivetricksstorage.blob.core.windows.net/images/articles/powerlifting/technique/squat-muscles/activation-patterns/1-muscles-worked-back-squat.webp",
-            "type": "lower"
+            "type": "lower",
+            "muscleGroup": "legs"
         },
         {
             "title": "Front Squat",
             "description": "A squat is a fundamental compound strength exercise targeting the quadriceps, hamstrings, and glutes, performed by lowering the hips from a standing position and standing back up. It improves lower-body strength, balance, and mobility. ",
             "imageUrl": "https://sportivetricksstorage.blob.core.windows.net/images/articles/powerlifting/technique/squat-muscles/activation-patterns/1-muscles-worked-back-squat.webp",
-            "type": "lower"
+            "type": "lower",
+            "muscleGroup": "legs"
         },
         {
             "title": "Leg Press",
             "description": "A squat is a fundamental compound strength exercise targeting the quadriceps, hamstrings, and glutes, performed by lowering the hips from a standing position and standing back up. It improves lower-body strength, balance, and mobility. ",
             "imageUrl": "https://sportivetricksstorage.blob.core.windows.net/images/articles/powerlifting/technique/squat-muscles/activation-patterns/1-muscles-worked-back-squat.webp",
-            "type": "lower"
+            "type": "lower",
+            "muscleGroup": "legs"
         },
         {
             "title": "Lunges",
             "description": "A squat is a fundamental compound strength exercise targeting the quadriceps, hamstrings, and glutes, performed by lowering the hips from a standing position and standing back up. It improves lower-body strength, balance, and mobility. ",
             "imageUrl": "https://sportivetricksstorage.blob.core.windows.net/images/articles/powerlifting/technique/squat-muscles/activation-patterns/1-muscles-worked-back-squat.webp",
-            "type": "lower"
+            "type": "lower",
+            "muscleGroup": "legs"
         },
         {
             "title": "Romanian Deadlift",
             "description": "A squat is a fundamental compound strength exercise targeting the quadriceps, hamstrings, and glutes, performed by lowering the hips from a standing position and standing back up. It improves lower-body strength, balance, and mobility. ",
             "imageUrl": "https://sportivetricksstorage.blob.core.windows.net/images/articles/powerlifting/technique/squat-muscles/activation-patterns/1-muscles-worked-back-squat.webp",
-            "type": "lower"
+            "type": "lower",
+            "muscleGroup": "legs"
         },
         {
             "title": "Leg Extension",
             "description": "A squat is a fundamental compound strength exercise targeting the quadriceps, hamstrings, and glutes, performed by lowering the hips from a standing position and standing back up. It improves lower-body strength, balance, and mobility. ",
             "imageUrl": "https://sportivetricksstorage.blob.core.windows.net/images/articles/powerlifting/technique/squat-muscles/activation-patterns/1-muscles-worked-back-squat.webp",
-            "type": "lower"
+            "type": "lower",
+            "muscleGroup": "legs"
         },
         {
             "title": "Leg Curl",
             "description": "A squat is a fundamental compound strength exercise targeting the quadriceps, hamstrings, and glutes, performed by lowering the hips from a standing position and standing back up. It improves lower-body strength, balance, and mobility. ",
             "imageUrl": "https://sportivetricksstorage.blob.core.windows.net/images/articles/powerlifting/technique/squat-muscles/activation-patterns/1-muscles-worked-back-squat.webp",
-            "type": "lower"
+            "type": "lower",
+            "muscleGroup": "legs"
         },
         {
             "title": "Calf Raises",
             "description": "A squat is a fundamental compound strength exercise targeting the quadriceps, hamstrings, and glutes, performed by lowering the hips from a standing position and standing back up. It improves lower-body strength, balance, and mobility. ",
             "imageUrl": "https://sportivetricksstorage.blob.core.windows.net/images/articles/powerlifting/technique/squat-muscles/activation-patterns/1-muscles-worked-back-squat.webp",
-            "type": "lower"
+            "type": "lower",
+            "muscleGroup": "legs"
         },
         {
             "title": "Bulgarian Split Squat",
             "description": "A squat is a fundamental compound strength exercise targeting the quadriceps, hamstrings, and glutes, performed by lowering the hips from a standing position and standing back up. It improves lower-body strength, balance, and mobility. ",
             "imageUrl": "https://sportivetricksstorage.blob.core.windows.net/images/articles/powerlifting/technique/squat-muscles/activation-patterns/1-muscles-worked-back-squat.webp",
-            "type": "lower"
+            "type": "lower",
+            "muscleGroup": "legs"
         }
     ]
 }

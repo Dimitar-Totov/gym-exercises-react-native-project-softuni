@@ -1,19 +1,27 @@
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
 
-export default function HomepageCards() {
+const groups = ["Back", "Chest", "Arms", "Legs", "Abs", "Full-Body"]
+
+export default function HomepageCards({ navigation }) {
+
+    const handlePress = (muscleGroup) => {
+        navigation.navigate('Muscle Groups', { muscleGroup })
+    }
+
     return (
         <View style={{ flexDirection: 'row', width: '90%', flexWrap: 'wrap', gap: 30 }}>
-            <View style={style.card}><Text style={style.cardText}>Back</Text></View>
-            <View style={style.card}><Text style={style.cardText}>Chest</Text></View>
-            <View style={style.card}><Text style={style.cardText}>Arms</Text></View>
-            <View style={style.card}><Text style={style.cardText}>Legs</Text></View>
-            <View style={style.card}><Text style={style.cardText}>Abs</Text></View>
-            <View style={style.card}><Text style={style.cardText}>Full-Body</Text></View>
+            {groups.map(item => (
+                <TouchableOpacity key={item} onPress={() => handlePress(item)}>
+                    <View style={styles.card}>
+                        <Text style={styles.cardText}>{item}</Text>
+                    </View>
+                </TouchableOpacity>
+            ))}
         </View>
     )
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     card: {
         backgroundColor: '#7CFC00',
         width: 95,
@@ -25,6 +33,7 @@ const style = StyleSheet.create({
     cardText: {
         fontSize: 20,
         textAlign: 'center',
-        fontWeight: '600'
+        fontWeight: '600',
+        color: '#3a3838'
     }
 })

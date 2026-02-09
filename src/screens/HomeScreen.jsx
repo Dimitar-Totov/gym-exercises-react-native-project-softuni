@@ -9,7 +9,7 @@ import ExcercisesHomepage from '../components/ExcercisesHomepage';
 import HomepageCards from '../components/HomepageCards';
 import PopularExercises from '../components/PopularExercises';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation, route }) {
     const [text, setText] = useState('');
     const filteredData = useMemo(() => data.exercises.filter(item => text === '' ? '' : item.title.toLocaleLowerCase().includes(text.toLocaleLowerCase())), [text]);
 
@@ -37,7 +37,7 @@ export default function HomeScreen() {
                                     </TouchableOpacity>
                                     : ''
                                 }
-                                {text ? <ExcercisesHomepage searchedText={filteredData} /> : <HomepageCards />}
+                                {text ? <ExcercisesHomepage searchedText={filteredData} /> : <HomepageCards route={route} navigation={navigation} />}
                             </View>
                             <PopularExercises />
                         </View>
