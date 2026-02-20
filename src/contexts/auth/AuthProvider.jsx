@@ -6,6 +6,7 @@ export const AuthContext = createContext({
     login: async (email, password) => { },
     logout: () => { },
     authError: null,
+    auth: {},
 });
 
 export function AuthProvider({ children }) {
@@ -24,6 +25,7 @@ export function AuthProvider({ children }) {
         login,
         logout: () => setAuth({}),
         authError,
+        auth,
     }
 
     return (

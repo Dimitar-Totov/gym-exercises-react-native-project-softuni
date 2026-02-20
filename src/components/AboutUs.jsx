@@ -1,6 +1,4 @@
-import { Text, View, Image, StyleSheet, Dimensions, Platform, ScrollView } from "react-native";
-
-const { width } = Dimensions.get("window");
+import { Text, View, Image, StyleSheet, Platform, ScrollView } from "react-native";
 
 export default function AboutUs() {
     return (
@@ -33,8 +31,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     image: {
-        width: width,
-        height: width * 0.75,
+        width: '100%',
+        height: 350,
         resizeMode: 'cover'
     },
     content: {

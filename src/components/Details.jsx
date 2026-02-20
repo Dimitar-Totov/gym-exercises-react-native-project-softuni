@@ -1,5 +1,4 @@
-import { Image, StyleSheet, Text, View, Dimensions, Platform, ScrollView, TextInput } from "react-native";
-const { width } = Dimensions.get("window");
+import { Image, StyleSheet, Text, View, ScrollView, TextInput } from "react-native";
 
 import { ThumbsUp, ThumbsDown, MessageCircle, SendHorizonal } from 'lucide-react-native';
 
@@ -30,7 +29,7 @@ export default function Details({ route }) {
                         <ThumbsDown size={35} />
                         <MessageCircle size={35} onPress={commentClickHandler} />
                     </View>
-                    {commentButtonClick && 
+                    {commentButtonClick &&
                         <View style={styles.writingCommentSection}>
                             <TextInput onChangeText={setCommentInput} value={commentInput} placeholder="Share your thoughts about this exercise..." />
                             <SendHorizonal />
@@ -54,12 +53,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         fontWeight: 'bold',
         color: '#656565',
-        fontFamily: Platform.OS === 'ios' ? 'Georgia' : 'serif',
     },
     exerciseImage: {
-        width: width,
-        height: width,
-        resizeMode: 'contain',
+        width: '100%',
+        height: 350,
+        resizeMode: 'cover',
     },
     infoSection: {
         backgroundColor: '#fff',

@@ -1,9 +1,7 @@
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from "react-native";
 
 import { Smartphone, Mail, MapPin } from 'lucide-react-native';
 import MapView, { Marker } from "react-native-maps";
-
-const { width } = Dimensions.get("window");
 
 export default function InfoScreen({ navigation }) {
 
@@ -11,12 +9,27 @@ export default function InfoScreen({ navigation }) {
         navigation.navigate('About Us')
     }
     return (
-        <ScrollView>
+        <ScrollView style={{ backgroundColor: '#faf2f2', }}>
+            <MapView
+                style={styles.map}
+                initialRegion={{
+                    latitude: 42.6977,
+                    longitude: 23.3219,
+                    latitudeDelta: 0.05,
+                    longitudeDelta: 0.05,
+                }}
+            >
+                <Marker
+                    coordinate={{
+                        latitude: 42.6977,
+                        longitude: 23.3219,
+                    }}
+                    title="Our Location"
+                    description="Sofia, Bulgaria"
+                />
+            </MapView>
             <View style={styles.container}>
                 <View style={styles.content}>
-                    <View style={styles.welcomeImageContainer}>
-                        <Image style={styles.welcomeImage} source={require('../../assets/info.jpg')} />
-                    </View>
                     <View style={[styles.phone, styles.infoContainers]}>
                         <View>
                             < Smartphone size={30} style={{ color: '#30e418' }} />
@@ -26,7 +39,7 @@ export default function InfoScreen({ navigation }) {
                             <Text style={styles.secondaryText}>+359 123 440 621</Text>
                         </View>
                     </View>
-                    <View style={[styles.mail, styles.infoContainers]}>
+                    <View style={[styles.infoContainers]}>
                         <View>
                             < Mail size={30} style={{ color: '#30e418' }} />
                         </View>
@@ -52,24 +65,6 @@ export default function InfoScreen({ navigation }) {
                         </View>
                     </TouchableOpacity>
                 </View>
-                <MapView
-                    style={styles.map}
-                    initialRegion={{
-                        latitude: 42.6977,
-                        longitude: 23.3219,
-                        latitudeDelta: 0.05,
-                        longitudeDelta: 0.05,
-                    }}
-                >
-                    <Marker
-                        coordinate={{
-                            latitude: 42.6977,
-                            longitude: 23.3219,
-                        }}
-                        title="Our Location"
-                        description="Sofia, Bulgaria"
-                    />
-                </MapView>
             </View>
         </ScrollView >
     )
@@ -77,28 +72,17 @@ export default function InfoScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
-        flex: 1
+        height:'100%',
+        justifyContent: 'space-between'
     },
     content: {
-        backgroundColor: '#faf2f2',
-        alignItems: 'center'
-    },
-    welcomeImageContainer: {
-        width: width,
-        height: width,
-        marginBottom: 30
-    },
-    welcomeImage: {
-        width: '100%',
-        height: '100%',
-        resizeMode: 'cover',
+        alignItems: 'center',
     },
     infoContainers: {
         flexDirection: 'row',
         gap: 20,
         width: 300,
-        marginLeft: 30
+        marginLeft: 30,
     },
     textContainer: {
         gap: 2
@@ -115,9 +99,6 @@ const styles = StyleSheet.create({
         color: '#716e6e'
     },
     aboutUsContainer: {
-        backgroundColor: '#fff',
-        paddingTop: 5,
-        paddingBottom: 5,
         alignItems: 'center',
     },
     aboutUs: {
@@ -127,7 +108,9 @@ const styles = StyleSheet.create({
         paddingBlock: 10,
     },
     map: {
-        width: width,
-        height: width
+        width: '100%',
+        height: '100%',
+        marginTop: 60,
+        marginBottom: 30
     }
 })
