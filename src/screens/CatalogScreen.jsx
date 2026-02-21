@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useMemo, useState } from "react";
 
@@ -25,9 +25,11 @@ export default function CatalogScreen() {
                     <FilterButton label="Lower Body" value="lower" selected={selected} onPress={setSelected} />
                     <FilterButton label="Full Body" value="full" selected={selected} onPress={setSelected} />
                 </View>
-                <View style={styles.exercises}>
-                    {filteredData.map(title => <ExerciseCard key={title} title={title} />)}
-                </View>
+                <ScrollView contentContainerStyle={{ width: '100%', alignItems: 'center',flexGrow: 1, paddingBottom: 10}}>
+                    <View style={styles.exercises}>
+                        {filteredData.map(title => <ExerciseCard key={title} title={title} />)}
+                    </View>
+                </ScrollView >
             </View>
         </SafeAreaView>
     )
@@ -38,10 +40,10 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     content: {
+        flex: 1,
         width: '100%',
         marginTop: 10,
-        alignItems: 'center',
-        gap: 15
+        gap: 15,
     },
     selectOptions: {
         width: '100%',
