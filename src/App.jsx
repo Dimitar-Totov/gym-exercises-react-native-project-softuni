@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import RootNavigator from './navigation/RootNavigator';
 import { AuthProvider } from './contexts/auth/AuthProvider';
+import { ExercisesProvider } from './contexts/exercises/ExercisesProvider';
 
 export default function App() {
   return (
@@ -11,7 +12,9 @@ export default function App() {
       <NavigationContainer>
         <StatusBar style="auto" />
         <AuthProvider>
-          <RootNavigator />
+          <ExercisesProvider>
+            <RootNavigator />
+          </ExercisesProvider>
         </AuthProvider>
       </NavigationContainer>
     </SafeAreaProvider>
