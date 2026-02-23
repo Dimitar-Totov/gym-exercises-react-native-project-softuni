@@ -9,9 +9,11 @@ import SignInNavigator from "./SignInNavigator";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 
+import { useAuth } from "../contexts/auth/useAuth";
+
 export default function RootNavigator() {
 
-    const [user, setUser] = useState(null);
+    const { isAuthenticated } = useAuth()
     const Tabs = createBottomTabNavigator();
 
     return (
@@ -37,7 +39,7 @@ export default function RootNavigator() {
                     tabBarIcon: () => <Info />,
                 }}
             />
-            {user
+            {isAuthenticated
                 ? <Tabs.Screen
                     name="Profile"
                     component={ProfileScreen}

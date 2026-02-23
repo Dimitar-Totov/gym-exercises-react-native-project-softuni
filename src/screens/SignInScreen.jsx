@@ -1,13 +1,20 @@
 import { useState } from "react";
-
 import { Image, StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from "react-native";
+
+import { useAuth } from "../contexts/auth/useAuth";
 
 export default function SignInScreen({ navigation }) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { login } = useAuth()
 
     const signUpPressHandler = () => navigation.navigate('SignUp');
+
+    const loginHandler = async () => {
+        await login(email, password)
+
+    }
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -34,7 +41,7 @@ export default function SignInScreen({ navigation }) {
                     </View>
                 </View>
                 <View style={styles.buttons}>
-                    <TouchableOpacity style={styles.signInButton}>
+                    <TouchableOpacity style={styles.signInButton} onPress={loginHandler}>
                         <Text style={styles.signInButtonText}>Sign in</Text>
                     </TouchableOpacity>
                     <View style={styles.signUpSection}>
