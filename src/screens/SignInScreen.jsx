@@ -23,8 +23,8 @@ export default function SignInScreen({ navigation }) {
                     <Text style={styles.welcomeHeaderText}>Sign In</Text>
                 </View>
                 <View style={styles.inputSection}>
-                    <TextInput placeholder='e-mail' value={email} onChangeText={setEmail} style={styles.inputs} />
-                    <TextInput placeholder='password' value={password} onChangeText={setPassword} style={styles.inputs} />
+                    <TextInput placeholder='e-mail' value={email} keyboardType="email-address" onChangeText={setEmail} style={styles.inputs} />
+                    <TextInput placeholder='password' value={password} secureTextEntry onChangeText={setPassword} style={styles.inputs} />
                 </View>
                 <View style={styles.anotherAccountSection}>
                     <Text style={{ fontSize: 20, color: '#4f4e4e', marginBottom: 20 }}>Sign in with another account</Text>

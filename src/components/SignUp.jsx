@@ -20,9 +20,9 @@ export default function SignUp() {
             <View style={styles.container}>
                 <View style={styles.inputSection}>
                     <TextInput placeholder='username' value={username} onChangeText={setUsername} style={styles.inputs} />
-                    <TextInput placeholder='e-mail' value={email} onChangeText={setEmail} style={styles.inputs} />
-                    <TextInput placeholder='password' value={password} onChangeText={setPassword} style={styles.inputs} />
-                    <TextInput placeholder='repeat-password' value={rePassword} onChangeText={setRePassword} style={styles.inputs} />
+                    <TextInput placeholder='e-mail' value={email} keyboardType="email-address" onChangeText={setEmail} style={styles.inputs} />
+                    <TextInput placeholder='password' value={password} secureTextEntry onChangeText={setPassword} style={styles.inputs} />
+                    <TextInput placeholder='repeat-password' value={rePassword} secureTextEntry onChangeText={setRePassword} style={styles.inputs} />
                 </View>
                 <View style={styles.anotherAccountSection}>
                     <Text style={{ fontSize: 20, color: '#4f4e4e', marginBottom: 20 }}>Sign up with another account</Text>
