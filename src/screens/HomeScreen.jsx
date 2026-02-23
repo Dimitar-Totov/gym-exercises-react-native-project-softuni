@@ -8,7 +8,7 @@ import { X } from 'lucide-react-native';
 import ExcercisesHomepage from '../components/ExcercisesHomepage';
 import PopularExercises from '../components/PopularExercises';
 
-export default function HomeScreen({ navigation, route }) {
+export default function HomeScreen({ navigation }) {
     const [text, setText] = useState('');
     const filteredData = useMemo(() => data.exercises.filter(item => text === '' ? '' : item.title.toLocaleLowerCase().includes(text.toLocaleLowerCase())), [text]);
 

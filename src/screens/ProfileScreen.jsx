@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, Pressable, Image } from "react-native";
+import { StyleSheet, Text, View, Pressable, Image, TouchableOpacity } from "react-native";
 
 import { CalendarPlus, ChevronRight, LogOut, Settings, UserPen } from "lucide-react-native";
 import * as ImagePicker from "expo-image-picker";
 
+import { useAuth } from "../contexts/auth/useAuth";
+
 export default function ProfileScreen() {
     const [image, setImage] = useState(null);
+    const { authState, logout } = useAuth()
 
     const pickImage = async () => {
         const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -24,7 +27,7 @@ export default function ProfileScreen() {
             setImage(result.assets[0].uri);
         }
     };
-
+ 
     return (
         <View style={styles.container}>
             <Pressable style={styles.imageWrapper} onPress={pickImage}>
@@ -35,8 +38,8 @@ export default function ProfileScreen() {
                 )}
             </Pressable>
             <View style={styles.userSection}>
-                <Text style={styles.username}>Example Username</Text>
-                <Text style={styles.email}>example@email.com</Text>
+                <Text style={styles.username}>{authState.user.username}</Text>
+                <Text style={styles.email}>{authState.user.email}</Text>
             </View>
             <View style={styles.optionsSection}>
                 <View style={styles.optionContainer}>
@@ -60,12 +63,12 @@ export default function ProfileScreen() {
                     </View>
                     <ChevronRight color={styles.optionIcons.color} />
                 </View>
-                <View style={styles.optionContainer}>
+                <TouchableOpacity style={styles.optionContainer} onPress={logout}>
                     <View style={styles.option}>
                         <LogOut color={'red'} />
                         <Text style={[styles.optionText, { color: 'red' }]}>Logout</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
             </View>
         </View>
     )

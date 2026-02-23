@@ -1,14 +1,19 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useState } from "react";
 
-import { House, Dumbbell, Info, CircleUserRound } from "lucide-react-native";
+import { House, Dumbbell, Info, CircleUserRound, LogIn } from "lucide-react-native";
 
-import ProfileScreen from "../screens/ProfileScreen";
 import InfoNavigator from "./InfoNavigator";
 import CatalogNavigator from "./CatalogNavigator";
+import SignInNavigator from "./SignInNavigator";
 import HomeScreen from "../screens/HomeScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+
+import { useAuth } from "../contexts/auth/useAuth";
 
 export default function RootNavigator() {
 
+    const { isAuthenticated } = useAuth()
     const Tabs = createBottomTabNavigator();
 
     return (
@@ -34,13 +39,22 @@ export default function RootNavigator() {
                     tabBarIcon: () => <Info />,
                 }}
             />
-            <Tabs.Screen
-                name="Profile"
-                component={ProfileScreen}
-                options={{
-                    tabBarIcon: () => <CircleUserRound />,
-                }}
-            />
+            {isAuthenticated
+                ? <Tabs.Screen
+                    name="Profile"
+                    component={ProfileScreen}
+                    options={{
+                        tabBarIcon: () => <CircleUserRound />,
+                    }}
+                />
+                : <Tabs.Screen
+                    name="Sign In"
+                    component={SignInNavigator}
+                    options={{
+                        tabBarIcon: () => <LogIn />,
+                    }}
+                />
+            }
         </Tabs.Navigator>
     );
 }
