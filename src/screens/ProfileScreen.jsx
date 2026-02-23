@@ -27,7 +27,7 @@ export default function ProfileScreen() {
             setImage(result.assets[0].uri);
         }
     };
-
+ 
     return (
         <View style={styles.container}>
             <Pressable style={styles.imageWrapper} onPress={pickImage}>
@@ -38,7 +38,7 @@ export default function ProfileScreen() {
                 )}
             </Pressable>
             <View style={styles.userSection}>
-                <Text style={styles.username}>Example Username</Text>
+                <Text style={styles.username}>{authState.user.username}</Text>
                 <Text style={styles.email}>{authState.user.email}</Text>
             </View>
             <View style={styles.optionsSection}>

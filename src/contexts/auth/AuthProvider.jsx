@@ -6,7 +6,7 @@ import { auth } from "../../firebaseConfig.js";
 
 export const AuthContext = createContext({
     login: async (email, password) => { },
-    register: async (username, email, password, rePassword) => { },
+    register: async (email, password, username) => { },
     logout: () => { },
     authError: null,
     authState: {},
@@ -24,7 +24,7 @@ export function AuthProvider({ children }) {
                     user: {
                         id: user.uid,
                         email: user.email,
-                        name: user.displayName,
+                        username: user.displayName,
                     }
                 });
             } else {
@@ -41,7 +41,7 @@ export function AuthProvider({ children }) {
                 user: {
                     id: user.uid,
                     email: user.email,
-                    name: user.displayName,
+                    username: user.displayName,
                 }
             });
         } catch (error) {
@@ -49,10 +49,16 @@ export function AuthProvider({ children }) {
         }
     }
 
-    const register = async (username, email, password, rePassword) => {
+    const register = async (email, password, username) => {
         try {
-            const user = await authService.register(email, password);
-            setAuthState({ id: user.id, email: user.email })
+            const user = await authService.register(email, password, username);
+
+            setAuthState({
+                user: {
+                    id: user.uid,
+                    email: user.email
+                }
+            })
         } catch (error) {
             setAuthError(error.message);
         }

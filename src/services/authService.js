@@ -7,7 +7,7 @@ export async function login(email, password) {
     return result.user;
 }
 
-export async function register(username, email, password, rePassword) {
+export async function register(email, password, username) {
     const result = await createUserWithEmailAndPassword(auth, email, password);
 
     await updateProfile(result.user, { displayName: username });

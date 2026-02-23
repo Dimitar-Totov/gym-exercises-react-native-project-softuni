@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { Image, StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from "react-native";
+import { useAuth } from "../contexts/auth/useAuth";
 
 export default function SignUp() {
 
@@ -8,6 +9,11 @@ export default function SignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
+    const { register, authError } = useAuth();
+
+    const registerPressHandler = async () => {
+        await register(email, password, username)
+    }
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -33,7 +39,7 @@ export default function SignUp() {
                     </View>
                 </View>
                 <View style={styles.buttons}>
-                    <TouchableOpacity style={styles.signUpButton}>
+                    <TouchableOpacity style={styles.signUpButton} onPress={registerPressHandler}>
                         <Text style={styles.signUpButtonText}>Sign up</Text>
                     </TouchableOpacity>
                 </View>
