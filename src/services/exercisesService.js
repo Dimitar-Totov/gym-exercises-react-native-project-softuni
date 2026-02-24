@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, getDoc, doc } from "firebase/firestore";
 import { database } from "../firebaseConfig";
 
 export async function getAll() {
@@ -15,4 +15,9 @@ export async function getByType(typeOfExercise) {
 
     const result = await getDocs(q);
     return result.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
+
+export async function getById(exerciseId) {
+    const result = await getDoc(doc(database, 'exercises', exerciseId));
+    return { id: result.id, ...result.data() };
 }

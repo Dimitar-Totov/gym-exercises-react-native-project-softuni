@@ -7,7 +7,7 @@ export default function ExerciseCard({ exerciseData }) {
     const navigation = useNavigation();
 
     return (
-        <TouchableOpacity style={styles.exercise} onPress={() => navigation.navigate('Details Page', { exerciseData })}>
+        <TouchableOpacity style={styles.exercise} onPress={() => navigation.navigate('Details Page', { exerciseId: exerciseData.id })}>
             <Text style={{ fontWeight: '600', fontSize: 18, }}>{exerciseData.name}</Text>
             <ArrowRight />
         </TouchableOpacity>

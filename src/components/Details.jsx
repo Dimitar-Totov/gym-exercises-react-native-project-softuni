@@ -2,12 +2,13 @@ import { Image, StyleSheet, Text, View, ScrollView, TextInput } from "react-nati
 
 import { ThumbsUp, ThumbsDown, MessageCircle, SendHorizonal } from 'lucide-react-native';
 
-import * as data from '../data/data.json'
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useExercises } from "../contexts/exercises/useExercises";
 
 export default function Details({ route }) {
-    const { title } = route.params;
-    const exercise = data.exercises.find(exercise => exercise.title == title);
+    const { exerciseId } = route.params;
+    const { getExerciseById } = useExercises();
+    const [exercise, setExercise] = useState(null);
     const [commentButtonClick, setCommentButtonClicked] = useState(false);
     const [commentInput, setCommentInput] = useState('')
 
@@ -15,14 +16,22 @@ export default function Details({ route }) {
         setCommentButtonClicked(!commentButtonClick)
     }
 
+    useEffect(() => {
+        async function fetchExercise() {
+            const result = await getExerciseById(exerciseId);
+            setExercise(result);
+        }
+
+        fetchExercise();
+    }, [exerciseId]);
     return (
         <ScrollView>
             <View style={styles.container}>
                 <View style={styles.content}>
-                    <Text style={styles.welcomeHeader}>{exercise.title}</Text>
-                    <Image source={{ uri: exercise.imageUrl }} style={styles.exerciseImage} />
+                    <Text style={styles.welcomeHeader}>{exercise?.name}</Text>
+                    <Image source={{ uri: exercise?.['image-url'] }} style={styles.exerciseImage} />
                     <View style={styles.infoSection}>
-                        <Text style={{ lineHeight: 30, fontSize: 25, color: '#4f4c4c', textAlign: 'center' }}>{exercise.description}</Text>
+                        <Text style={{ lineHeight: 30, fontSize: 25, color: '#4f4c4c', textAlign: 'center' }}>{exercise?.description}</Text>
                     </View>
                     <View style={styles.buttons}>
                         <ThumbsUp size={35} />
