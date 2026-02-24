@@ -1,6 +1,6 @@
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import FilterButton from "../components/FilterButton";
 import ExerciseCard from "../components/ExerciseCard";
@@ -32,6 +32,7 @@ export default function CatalogScreen() {
                     <FilterButton label="Lower Body" value="lower" selected={selected} onPress={setSelected} />
                     <FilterButton label="Full Body" value="full" selected={selected} onPress={setSelected} />
                 </View>
+                {exercises.length === 0 ? <ActivityIndicator style={{ marginTop: 30 }} size={50} color="#21ef21" /> : ''}
                 <ScrollView contentContainerStyle={{ width: '100%', alignItems: 'center', flexGrow: 1, paddingBottom: 10 }}>
                     <View style={styles.exercises}>
                         {exercises.map(exercise => <ExerciseCard key={exercise.id} exerciseData={exercise} />)}
