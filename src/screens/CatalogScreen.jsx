@@ -7,17 +7,17 @@ import ExerciseCard from "../components/ExerciseCard";
 import { useExercises } from "../contexts/exercises/useExercises";
 
 export default function CatalogScreen() {
-    const { getByExerciseType, getFullBodyExercises } = useExercises();
+    const { getExerciseByType, getAllExercises } = useExercises();
     const [exercises, setExercises] = useState([]);
     const [selected, setSelected] = useState("upper");
 
     useEffect(() => {
         async function load() {
             if (selected === "full") {
-                const result = await getFullBodyExercises();
+                const result = await getAllExercises();
                 setExercises(result);
             } else {
-                const result = await getByExerciseType(selected);
+                const result = await getExerciseByType(selected);
                 setExercises(result);
             }
         }
