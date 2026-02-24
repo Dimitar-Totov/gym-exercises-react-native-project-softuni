@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Image, StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native";
 import { useAuth } from "../contexts/auth/useAuth";
 
 export default function SignUp() {
@@ -16,35 +16,41 @@ export default function SignUp() {
     }
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <View style={styles.container}>
-                <View style={styles.inputSection}>
-                    <TextInput placeholder='username' value={username} onChangeText={setUsername} style={styles.inputs} />
-                    <TextInput placeholder='e-mail' value={email} keyboardType="email-address" onChangeText={setEmail} style={styles.inputs} />
-                    <TextInput placeholder='password' value={password} secureTextEntry onChangeText={setPassword} style={styles.inputs} />
-                    <TextInput placeholder='repeat-password' value={rePassword} secureTextEntry onChangeText={setRePassword} style={styles.inputs} />
-                </View>
-                <View style={styles.anotherAccountSection}>
-                    <Text style={{ fontSize: 20, color: '#4f4e4e', marginBottom: 20 }}>Sign up with another account</Text>
-                    <View style={{ flexDirection: 'row', gap: 20 }}>
-                        <TouchableOpacity>
-                            <Image style={styles.anotherAccountImage} source={require('../../assets/google_logo.png')} />
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Image style={styles.anotherAccountImage} source={require('../../assets/microsoft_logo.png')} />
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Image style={styles.anotherAccountImage} source={require('../../assets/facebook_logo.png')} />
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
+            style={styles.container}
+        >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                <View style={styles.content}>
+                    <View style={styles.inputSection}>
+                        <TextInput placeholder='username' value={username} onChangeText={setUsername} style={styles.inputs} />
+                        <TextInput placeholder='e-mail' value={email} keyboardType="email-address" onChangeText={setEmail} style={styles.inputs} />
+                        <TextInput placeholder='password' value={password} secureTextEntry onChangeText={setPassword} style={styles.inputs} />
+                        <TextInput placeholder='repeat-password' value={rePassword} secureTextEntry onChangeText={setRePassword} style={styles.inputs} />
+                    </View>
+                    <View style={styles.anotherAccountSection}>
+                        <Text style={{ fontSize: 20, color: '#4f4e4e', marginBottom: 20 }}>Sign up with another account</Text>
+                        <View style={{ flexDirection: 'row', gap: 20 }}>
+                            <TouchableOpacity>
+                                <Image style={styles.anotherAccountImage} source={require('../../assets/google_logo.png')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <Image style={styles.anotherAccountImage} source={require('../../assets/microsoft_logo.png')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <Image style={styles.anotherAccountImage} source={require('../../assets/facebook_logo.png')} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={styles.buttons}>
+                        <TouchableOpacity style={styles.signUpButton} onPress={registerPressHandler}>
+                            <Text style={styles.signUpButtonText}>Sign up</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={styles.buttons}>
-                    <TouchableOpacity style={styles.signUpButton} onPress={registerPressHandler}>
-                        <Text style={styles.signUpButtonText}>Sign up</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -53,6 +59,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#f4f4f4',
         flex: 1,
         paddingTop: 50,
+        alignItems: 'center'
+    },
+    content: {
+        width: '100%',
         alignItems: 'center'
     },
     inputSection: {
