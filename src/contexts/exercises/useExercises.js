@@ -1,9 +1,9 @@
 import { useContext } from "react";
 
-import { ExercisesProvider } from "./ExercisesProvider";
+import { ExerciseContext } from "./ExercisesProvider";
 
 export function useExercises() {
-    const context = useContext(ExercisesProvider);
+    const context = useContext(ExerciseContext);
     
     return context;
 }

@@ -3,12 +3,12 @@ import { useNavigation } from '@react-navigation/native';
 
 import { ArrowRight } from 'lucide-react-native';
 
-export default function ExerciseCard({ title }) {
+export default function ExerciseCard({ exerciseData }) {
     const navigation = useNavigation();
 
     return (
-        <TouchableOpacity style={styles.exercise} onPress={() => navigation.navigate('Details Page', { title })}>
-            <Text style={{fontWeight: '600', fontSize: 18,}}>{title}</Text>
+        <TouchableOpacity style={styles.exercise} onPress={() => navigation.navigate('Details Page', { exerciseData })}>
+            <Text style={{ fontWeight: '600', fontSize: 18, }}>{exerciseData.name}</Text>
             <ArrowRight />
         </TouchableOpacity>
     )

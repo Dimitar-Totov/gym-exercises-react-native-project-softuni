@@ -2,20 +2,17 @@ import { createContext, useEffect, useState } from "react";
 import { exerciseService } from "../../services";
 
 export const ExerciseContext = createContext({
-    exercises: []
+    getFullBodyExercises: async () => { },
+    getByExerciseType: async (typeOfExercise) => { },
 });
 
 export function ExercisesProvider({ children }) {
-    const [exercises, setExercises] = useState([]);
-
-    useEffect(() => {
-        exerciseService.getAll()
-            .then((data) => setExercises(data))
-            .catch((err) => console.log(err.message))
-    }, [])
+    const getFullBodyExercises = async () => await exerciseService.getAll();
+    const getByExerciseType = async (typeOfExercise) => await exerciseService.getByType(typeOfExercise);
 
     const contextValue = {
-        exercises,
+        getFullBodyExercises,
+        getByExerciseType,
     };
 
     return (
