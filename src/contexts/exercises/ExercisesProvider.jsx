@@ -24,3 +24,4 @@ export function ExercisesProvider({ children }) {
         </ExerciseContext.Provider>
     )
 }
+
