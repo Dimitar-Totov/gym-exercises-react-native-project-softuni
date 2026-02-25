@@ -7,7 +7,7 @@ export default function HomeNavigator() {
     const Stack = createNativeStackNavigator();
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="Details Page" component={Details} options={{ headerTitle: 'Details', headerShown: true, headerBackTitleVisible: false, }} />
         </Stack.Navigator>
     )

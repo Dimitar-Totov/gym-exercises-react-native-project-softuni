@@ -1,11 +1,13 @@
 import { createContext, useEffect, useState } from "react";
-import { exerciseService } from "../../services";
+import { commentsService, exerciseService } from "../../services";
 
 export const ExerciseContext = createContext({
     getAllExercises: async () => { },
     getExerciseByType: async (typeOfExercise) => { },
     getExerciseById: async (exerciseId) => { },
     getExerciseByInput: async (exerciseId) => { },
+    getExerciseCommentsById: async (exerciseId) => { },
+    postExerciseCommentById: async (exerciseId, userId, comment, username) => { },
 });
 
 export function ExercisesProvider({ children }) {
@@ -14,11 +16,16 @@ export function ExercisesProvider({ children }) {
     const getExerciseById = async (exerciseId) => await exerciseService.getById(exerciseId);
     const getExerciseByInput = async (input) => await exerciseService.getByInput(input);
 
+    const getExerciseCommentsById = async (exerciseId) => commentsService.getComments(exerciseId);
+    const postExerciseCommentById = async (exerciseId, userId, comment, username) => commentsService.addComment(exerciseId, userId, comment, username);
+
     const contextValue = {
         getAllExercises,
         getExerciseByType,
         getExerciseById,
-        getExerciseByInput
+        getExerciseByInput,
+        getExerciseCommentsById,
+        postExerciseCommentById
     };
 
     return (

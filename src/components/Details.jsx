@@ -9,22 +9,25 @@ import {
     KeyboardAvoidingView,
     Keyboard,
     Platform,
-    ActivityIndicator
+    ActivityIndicator,
 } from "react-native";
 
 import { ThumbsUp, ThumbsDown, MessageCircle, SendHorizonal } from 'lucide-react-native';
 
 import { useState, useEffect, useRef } from "react";
 import { useExercises } from "../contexts/exercises/useExercises";
+import { useAuth } from "../contexts/auth/useAuth";
+import ExerciseComments from "./ExerciseComments";
 
 export default function Details({ route }) {
     const { exerciseId } = route.params;
-    const { getExerciseById } = useExercises();
+    const { getExerciseById, postExerciseCommentById, getExerciseCommentsById } = useExercises();
+    const { authState } = useAuth();
     const [exercise, setExercise] = useState(null);
     const [commentButtonClick, setCommentButtonClicked] = useState(false);
     const [commentInput, setCommentInput] = useState('');
+    const [comments, setComments] = useState([]);
     const scrollViewRef = useRef(null);
-    const commentInputRef = useRef(null);
 
     const commentClickHandler = () => {
         setCommentButtonClicked(!commentButtonClick)
@@ -32,10 +35,15 @@ export default function Details({ route }) {
 
     useEffect(() => {
         async function fetchExercise() {
-            const result = await getExerciseById(exerciseId);
-            setExercise(result);
+            try {
+                const comments = await getExerciseCommentsById(exerciseId);
+                setComments(comments)
+                const result = await getExerciseById(exerciseId);
+                setExercise(result);
+            } catch (error) {
+                console.log(error.message);
+            }
         }
-
         fetchExercise();
     }, [exerciseId]);
 
@@ -43,26 +51,30 @@ export default function Details({ route }) {
         if (commentButtonClick) {
             const timer = setTimeout(() => {
                 scrollViewRef.current?.scrollToEnd({ animated: true });
-                commentInputRef.current?.focus();
             }, 0);
 
             return () => clearTimeout(timer);
         }
     }, [commentButtonClick]);
 
+    const postCommentHandler = async () => {
+        if(commentInput.length === 0) return;
+        try {
+            await postExerciseCommentById(exerciseId, authState.user.id, commentInput, authState.user.username);
+            setCommentInput('')
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
-            style={styles.container}
         >
             <ScrollView
                 keyboardDismissMode="on-drag"
                 ref={scrollViewRef}
-                keyboardShouldPersistTaps="handled"
-                showsVerticalScrollIndicator={false}
-                nestedScrollEnabled={true}
-                style={{ flex: 1 }}
             >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.content}>
@@ -80,22 +92,26 @@ export default function Details({ route }) {
                                 <View style={styles.buttons}>
                                     <ThumbsUp size={35} />
                                     <ThumbsDown size={35} />
-                                    <MessageCircle size={35} onPress={commentClickHandler} />
+                                    <TouchableOpacity onPress={commentClickHandler}><MessageCircle size={35} /></TouchableOpacity>
                                 </View>
-                                {commentButtonClick && (
-                                    <View style={styles.writingCommentSection}>
-                                        <TextInput
-                                            style={{ width: '90%' }}
-                                            ref={commentInputRef}
-                                            onChangeText={setCommentInput}
-                                            value={commentInput}
-                                            placeholder="Share your thoughts about this exercise..."
-                                        />
-                                        <TouchableOpacity>
-                                            <SendHorizonal />
-                                        </TouchableOpacity>
-                                    </View>
-                                )}
+                                <View style={styles.commentsSection}>
+                                    {commentButtonClick && (
+                                        <>
+                                            <ExerciseComments commentsData={comments} onClose={commentClickHandler} />
+                                            <View style={styles.writingCommentSection}>
+                                                <TextInput
+                                                    style={{ width: '90%' }}
+                                                    onChangeText={setCommentInput}
+                                                    value={commentInput}
+                                                    placeholder="Share your thoughts about this exercise..."
+                                                />
+                                                <TouchableOpacity onPress={postCommentHandler}>
+                                                    <SendHorizonal />
+                                                </TouchableOpacity>
+                                            </View>
+                                        </>
+                                    )}
+                                </View>
                             </>
                         )}
                     </View>
@@ -106,11 +122,9 @@ export default function Details({ route }) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
     content: {
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#fff'
     },
     welcomeHeader: {
         fontSize: 30,
@@ -124,12 +138,10 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     infoSection: {
-        backgroundColor: '#fff',
         padding: 25,
     },
     buttons: {
         flexDirection: 'row',
-        backgroundColor: '#fff',
         width: '100%',
         justifyContent: 'space-around',
         paddingBottom: 15
@@ -149,5 +161,12 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.12,
         shadowRadius: 10,
         elevation: 8,
+    },
+    commentsSection: {
+        position: 'absolute',
+        bottom: 0,
+        backgroundColor: '#fff',
+        height: '50%',
+        justifyContent: 'space-between'
     }
 })
