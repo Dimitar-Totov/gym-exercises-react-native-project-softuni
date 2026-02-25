@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where, getDoc, doc } from "firebase/firestore";
+import { collection, getDocs, query, where, getDoc, doc, orderBy, startAt, endAt } from "firebase/firestore";
 import { database } from "../firebaseConfig";
 
 export async function getAll() {
@@ -20,4 +20,26 @@ export async function getByType(typeOfExercise) {
 export async function getById(exerciseId) {
     const result = await getDoc(doc(database, 'exercises', exerciseId));
     return { id: result.id, ...result.data() };
+}
+
+export async function getByInput(input) {
+
+    if (!input) return null;
+    const exercisesRef = collection(database, "exercises");
+    const lowered = input.toLowerCase();
+
+    const q = query(
+        exercisesRef,
+        orderBy("nameLower"),
+        startAt(lowered),
+        endAt(lowered + "\uf8ff")
+    );
+
+    const snap = await getDocs(q);
+
+    return snap.docs.map(doc => ({
+        id: doc.id,
+        name: doc.data().name,
+        image: doc.data()["image-url"]
+    }));
 }

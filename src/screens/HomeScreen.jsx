@@ -1,17 +1,26 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Text, View, Image, TextInput, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import * as data from '../data/data.json'
 import { X } from 'lucide-react-native';
 
 import ExcercisesHomepage from '../components/ExcercisesHomepage';
 import PopularExercises from '../components/PopularExercises';
+import { useExercises } from '../contexts/exercises/useExercises';
 
 export default function HomeScreen({ navigation }) {
     const [text, setText] = useState('');
-    const filteredData = useMemo(() => data.exercises.filter(item => text === '' ? '' : item.title.toLocaleLowerCase().includes(text.toLocaleLowerCase())), [text]);
+    const [searchedExercises, setSearchedExercises] = useState([]);
+    const { getExerciseByInput } = useExercises();
 
+    useEffect(() => {
+        async function loadData() {
+            const result = await getExerciseByInput(text);
+            setSearchedExercises(result)
+        }
+        loadData();
+    }, [text]);
+ 
     return (
         <SafeAreaView style={{ flex: 1 }} edges={[]}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -36,7 +45,7 @@ export default function HomeScreen({ navigation }) {
                                     </TouchableOpacity>
                                     : ''
                                 }
-                                {text ? <ExcercisesHomepage searchedText={filteredData} /> : ''}
+                                {text ? <ExcercisesHomepage searching={searchedExercises} /> : ''}
                             </View>
                             <PopularExercises navigation={navigation} />
                         </View>
