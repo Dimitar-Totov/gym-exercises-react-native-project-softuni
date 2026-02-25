@@ -1,12 +1,30 @@
+import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+    Text,
+    View,
+    Image,
+    StyleSheet,
+    TouchableOpacity,
+} from 'react-native';
 
 export default function ExcercisesHomepage({ searching }) {
     const navigation = useNavigation();
 
+    const [showNoMatches, setShowNoMatches] = useState(false);
+
+    useEffect(() => {
+        if (searching?.length === 0) {
+            const timer = setTimeout(() => setShowNoMatches(true), 2000);
+            return () => clearTimeout(timer);
+        } else {
+            setShowNoMatches(false);
+        }
+    }, [searching]);
+
     return (
         <View style={{ width: '100%', alignItems: 'center' }}>
-            {searching?.length === 0
+            {searching?.length === 0 && showNoMatches
                 ? <Text style={{ fontSize: 25, fontFamily: 'monospace', }}>No matches found</Text>
                 : searching?.map(e => (
                     <View key={e.id} style={styles.container}>

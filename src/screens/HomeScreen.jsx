@@ -1,5 +1,18 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Text, View, Image, TextInput, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { useEffect, useState } from 'react';
+import {
+    Text,
+    View,
+    Image,
+    TextInput,
+    StyleSheet,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    Keyboard,
+    TouchableWithoutFeedback,
+    TouchableOpacity,
+    ActivityIndicator
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { X } from 'lucide-react-native';
@@ -12,11 +25,14 @@ export default function HomeScreen({ navigation }) {
     const [text, setText] = useState('');
     const [searchedExercises, setSearchedExercises] = useState([]);
     const { getExerciseByInput } = useExercises();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
         async function loadData() {
             const result = await getExerciseByInput(text);
-            setSearchedExercises(result)
+            setSearchedExercises(result);
+            setLoading(false)
         }
         loadData();
     }, [text]);
@@ -45,6 +61,7 @@ export default function HomeScreen({ navigation }) {
                                     </TouchableOpacity>
                                     : ''
                                 }
+                                {loading && <ActivityIndicator size={40} color="#21ef21" />}
                                 {text ? <ExcercisesHomepage searching={searchedExercises} /> : ''}
                             </View>
                             <PopularExercises navigation={navigation} />
