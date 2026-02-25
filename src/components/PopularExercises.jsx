@@ -2,7 +2,7 @@ import { Text, View, Image, Button, StyleSheet, TouchableOpacity } from 'react-n
 
 export default function PopularExercises({ navigation }) {
 
-    const viewAllPressHandler = () => navigation.navigate('Catalog');
+    const viewAllPressHandler = () => navigation.navigate('Exercises');
 
     return (
         <View style={{ justifyContent: 'center', marginTop: 25 }}>

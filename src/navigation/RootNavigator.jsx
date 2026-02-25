@@ -19,14 +19,14 @@ export default function RootNavigator() {
     return (
         <Tabs.Navigator screenOptions={{ headerShown: false }}>
             <Tabs.Screen
-                name="HomeScreen"
+                name="Home"
                 component={HomeNavigator}
                 options={{
                     tabBarIcon: () => <House />,
                 }}
             />
             <Tabs.Screen
-                name="Catalog"
+                name="Exercises"
                 component={CatalogNavigator}
                 options={{
                     tabBarIcon: () => <Dumbbell />,
