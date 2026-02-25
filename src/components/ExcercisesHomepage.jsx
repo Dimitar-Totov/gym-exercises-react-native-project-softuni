@@ -1,6 +1,9 @@
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function ExcercisesHomepage({ searching }) {
+    const navigation = useNavigation();
+
     return (
         <View style={{ width: '100%', alignItems: 'center' }}>
             {searching?.length === 0
@@ -10,7 +13,9 @@ export default function ExcercisesHomepage({ searching }) {
                         <Image style={{ resizeMode: 'cover', width: '80%', height: '100%' }} source={{ uri: e?.image }} />
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '83%', paddingBlock: 10, alignItems: 'center', }}>
                             <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#04b625' }}>{e.name}</Text>
-                            <Text style={{ fontFamily: 'sans-serif-light', fontStyle: 'italic', fontSize: 15 }}>Learn more...</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('Details Page', { exerciseId: e.id })}>
+                                <Text style={{ fontFamily: 'sans-serif-light', fontStyle: 'italic', fontSize: 15 }}>Learn more...</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 ))}

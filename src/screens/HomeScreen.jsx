@@ -20,7 +20,7 @@ export default function HomeScreen({ navigation }) {
         }
         loadData();
     }, [text]);
- 
+
     return (
         <SafeAreaView style={{ flex: 1 }} edges={[]}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

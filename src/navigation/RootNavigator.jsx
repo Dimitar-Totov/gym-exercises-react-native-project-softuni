@@ -6,10 +6,10 @@ import { House, Dumbbell, Info, CircleUserRound, LogIn } from "lucide-react-nati
 import InfoNavigator from "./InfoNavigator";
 import CatalogNavigator from "./CatalogNavigator";
 import SignInNavigator from "./SignInNavigator";
-import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 
 import { useAuth } from "../contexts/auth/useAuth";
+import HomeNavigator from "./HomeNavigator";
 
 export default function RootNavigator() {
 
@@ -19,8 +19,8 @@ export default function RootNavigator() {
     return (
         <Tabs.Navigator screenOptions={{ headerShown: false }}>
             <Tabs.Screen
-                name="Home"
-                component={HomeScreen}
+                name="HomeScreen"
+                component={HomeNavigator}
                 options={{
                     tabBarIcon: () => <House />,
                 }}

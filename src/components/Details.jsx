@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     },
     welcomeHeader: {
         fontSize: 30,
-        marginTop: 20,
+        marginBlock: 20,
         fontWeight: 'bold',
         color: '#656565',
     },
