@@ -103,17 +103,19 @@ export default function Details({ route }) {
                 {commentButtonClick && (
                     <>
                         <ExerciseComments commentsData={comments} onClose={commentClickHandler} exerciseId={exerciseId} />
-                        <View style={styles.writingCommentSection}>
-                            <TextInput
-                                style={{ width: '90%' }}
-                                onChangeText={setCommentInput}
-                                value={commentInput}
-                                placeholder="Share your thoughts about this exercise..."
-                            />
-                            <TouchableOpacity onPress={postCommentHandler}>
-                                <SendHorizonal />
-                            </TouchableOpacity>
-                        </View>
+                        {authState.user &&
+                            <View style={styles.writingCommentSection}>
+                                <TextInput
+                                    style={{ width: '90%' }}
+                                    onChangeText={setCommentInput}
+                                    value={commentInput}
+                                    placeholder="Share your thoughts about this exercise..."
+                                />
+                                <TouchableOpacity onPress={postCommentHandler}>
+                                    <SendHorizonal />
+                                </TouchableOpacity>
+                            </View>
+                        }
                     </>
                 )}
             </View>
@@ -167,6 +169,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         backgroundColor: '#fff',
         height: '50%',
+        width: '100%',
         justifyContent: 'space-between'
     }
 })
