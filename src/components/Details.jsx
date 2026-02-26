@@ -12,7 +12,7 @@ import {
     ActivityIndicator,
 } from "react-native";
 
-import { ThumbsUp, MessageCircle, SendHorizonal } from 'lucide-react-native';
+import { ThumbsUp, MessageCircle } from 'lucide-react-native';
 
 import { useState, useEffect, useRef } from "react";
 import { useExercises } from "../contexts/exercises/useExercises";
@@ -25,26 +25,24 @@ export default function Details({ route }) {
     const { exerciseId } = route.params;
     const {
         getExerciseById,
-        postExerciseCommentById,
         toggleLikes
     } = useExercises();
     const { authState } = useAuth();
     const [exercise, setExercise] = useState(null);
     const [commentButtonClick, setCommentButtonClicked] = useState(false);
-    const [commentInput, setCommentInput] = useState('');
     const scrollViewRef = useRef(null);
-    const [likesCount,setLikesCount] = useState(0)
+    const [likesCount, setLikesCount] = useState(0)
 
     const likes = useLikes(exerciseId);
     const comments = useComments(exerciseId);
 
-    const liked = likes.includes(authState.user?.id);
+    const isLiked = likes.includes(authState.user?.id);
 
     const commentClickHandler = () => {
         setCommentButtonClicked(!commentButtonClick)
     }
 
-    useEffect(() => setLikesCount(likes.length) ,[likes])
+    useEffect(() => setLikesCount(likes.length), [likes])
 
     useEffect(() => {
         async function fetchExercise() {
@@ -68,25 +66,12 @@ export default function Details({ route }) {
         }
     }, [commentButtonClick]);
 
-    const postCommentHandler = async () => {
-        if (commentInput.length === 0) return;
-        try {
-            await postExerciseCommentById(exerciseId, authState.user.id, commentInput, authState.user.username);
-            setCommentInput('')
-        } catch (error) {
-            console.log(error.message);
-        }
-    }
-
     const likePressHandler = async () => {
         await toggleLikes(exerciseId, authState.user?.id);
     }
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
-        >
+        <>
             <ScrollView
                 keyboardDismissMode="on-drag"
                 ref={scrollViewRef}
@@ -106,7 +91,7 @@ export default function Details({ route }) {
                                 </View>
                                 <View style={styles.buttons}>
                                     <View>
-                                        <TouchableOpacity onPress={likePressHandler} disabled={!authState.user}><ThumbsUp size={35} color={liked ? '#fff' : '#323232'} fill={liked ? '#1d4dd3' : 'none'} /></TouchableOpacity>
+                                        <TouchableOpacity onPress={likePressHandler} disabled={!authState.user}><ThumbsUp size={35} color={isLiked ? '#fff' : '#323232'} fill={isLiked ? '#1d4dd3' : 'none'} /></TouchableOpacity>
                                         <Text style={styles.countBadge}>{likesCount}</Text>
                                     </View>
                                     <View>
@@ -119,30 +104,10 @@ export default function Details({ route }) {
                     </View>
                 </TouchableWithoutFeedback>
             </ScrollView>
-            {commentButtonClick && (
-                <View style={styles.commentsSection}>
-                    <>
-                        <ExerciseComments onClose={commentClickHandler} exerciseId={exerciseId} />
-                        {authState.user &&
-                            <View style={styles.writingCommentSection}>
-                                <TextInput
-                                    style={{ width: '90%' }}
-                                    onChangeText={setCommentInput}
-                                    value={commentInput}
-                                    placeholder="Share your thoughts about this exercise..."
-                                />
-                                <TouchableOpacity onPress={postCommentHandler}>
-                                    <SendHorizonal />
-                                </TouchableOpacity>
-                            </View>
-                        }
-                    </>
-                </View>
-            )}
-        </KeyboardAvoidingView >
+            {commentButtonClick && <ExerciseComments onClose={commentClickHandler} exerciseId={exerciseId} commentsData={comments} />}
+        </>
     )
 }
-
 const styles = StyleSheet.create({
     content: {
         alignItems: 'center',
@@ -167,30 +132,6 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-around',
         paddingBottom: 15
-    },
-    writingCommentSection: {
-        width: '99%',
-        alignItems: 'center',
-        paddingBlock: 10,
-        paddingInline: 16,
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        marginBlock: 10,
-        backgroundColor: "#fff",
-        borderRadius: 16,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.12,
-        shadowRadius: 10,
-        elevation: 8,
-    },
-    commentsSection: {
-        position: 'absolute',
-        bottom: 0,
-        backgroundColor: '#fff',
-        height: '50%',
-        width: '100%',
-        justifyContent: 'space-between'
     },
     countBadge: {
         position: 'absolute',

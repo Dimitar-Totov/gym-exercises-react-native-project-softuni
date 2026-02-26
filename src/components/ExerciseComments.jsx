@@ -1,20 +1,30 @@
-import { StyleSheet, View, Text, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
+import {
+    StyleSheet,
+    View,
+    Text,
+    TouchableOpacity,
+    FlatList,
+    ActivityIndicator,
+    TextInput,
+    KeyboardAvoidingView,
+    Platform
+} from "react-native";
 
-import { X } from "lucide-react-native";
+import { X, SendHorizonal } from "lucide-react-native";
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/auth/useAuth";
 import { useExercises } from "../contexts/exercises/useExercises";
-import { useComments } from "../hooks/useComments";
 
-export default function ExerciseComments({ onClose, exerciseId }) {
+export default function ExerciseComments({ onClose, exerciseId, commentsData }) {
 
     const { authState } = useAuth();
+    const { deleteExerciseCommentById, postExerciseCommentById } = useExercises();
+
     const [loadingMore, setLoadingMore] = useState(false);
-    const commentsData = useComments(exerciseId);
+    const [commentInput, setCommentInput] = useState('');
 
     const PAGE_SIZE = 3;
 
-    const { deleteExerciseCommentById } = useExercises();
     const [page, setPage] = useState(1);
     const [visibleComments, setVisibleComments] = useState(
         commentsData.slice(0, PAGE_SIZE)
@@ -87,6 +97,15 @@ export default function ExerciseComments({ onClose, exerciseId }) {
         </View>
     );
 
+    const postCommentHandler = async () => {
+        if (commentInput.length === 0) return;
+        try {
+            await postExerciseCommentById(exerciseId, authState.user.id, commentInput, authState.user.username);
+            setCommentInput('')
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
     return (
         <View style={styles.commentsContainer}>
             <View style={styles.welcomeHeaderSection}>
@@ -108,17 +127,40 @@ export default function ExerciseComments({ onClose, exerciseId }) {
                         }
                     />
                 )}
+            {authState.user &&
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                    keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
+                >
+                    <View style={styles.writeCommentSection}>
+                        <TextInput
+                            style={styles.writeCommentInput}
+                            onChangeText={setCommentInput}
+                            value={commentInput}
+                            placeholder="Share your thoughts about this exercise..."
+                        />
+                        <TouchableOpacity onPress={postCommentHandler}>
+                            <SendHorizonal />
+                        </TouchableOpacity>
+                    </View>
+                </KeyboardAvoidingView >
+            }
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     commentsContainer: {
-        flex: 1,
-        paddingInline: 15,
-        paddingTop: 10,
+        position: 'absolute',
+        position: 'absolute',
+        bottom: 0,
+        backgroundColor: '#fff',
+        height: '50%',
+        width: '100%',
+        justifyContent: 'space-between',
+        padding: 10,
         borderTopWidth: 2,
-        borderTopColor: '#ddd',
+        borderTopColor: '#464444'
     },
     welcomeHeaderSection: {
         flexDirection: 'row',
@@ -152,5 +194,27 @@ const styles = StyleSheet.create({
         gap: 15,
         paddingLeft: 6,
         marginTop: 2
+    },
+    writeCommentSection: {
+        width: "100%",
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: 12,
+        paddingHorizontal: 18,
+        backgroundColor: "#f7f7f7",
+        borderRadius: 14,
+        fontSize: 16,
+        borderWidth: 1,
+        borderColor: "#e0e0e0",
+        color: "#333",
+        shadowColor: "#000",
+        shadowOpacity: 0.05,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 4,
+        elevation: 2,
+    },
+    writeCommentInput: {
+        width: '90%'
     }
 })
