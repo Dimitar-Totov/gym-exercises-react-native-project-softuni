@@ -92,15 +92,18 @@ export default function Details({ route }) {
                                 <View style={styles.buttons}>
                                     <ThumbsUp size={35} />
                                     <ThumbsDown size={35} />
-                                    <TouchableOpacity onPress={commentClickHandler}><MessageCircle size={35} /></TouchableOpacity>
+                                    <View>
+                                        <TouchableOpacity onPress={commentClickHandler}><MessageCircle size={35} /></TouchableOpacity>
+                                        <Text style={styles.countBadge}>{comments.length}</Text>
+                                    </View>
                                 </View>
                             </>
                         )}
                     </View>
                 </TouchableWithoutFeedback>
             </ScrollView>
-            <View style={styles.commentsSection}>
-                {commentButtonClick && (
+            {commentButtonClick && (
+                <View style={styles.commentsSection}>
                     <>
                         <ExerciseComments commentsData={comments} onClose={commentClickHandler} exerciseId={exerciseId} />
                         {authState.user &&
@@ -117,8 +120,8 @@ export default function Details({ route }) {
                             </View>
                         }
                     </>
-                )}
-            </View>
+                </View>
+            )}
         </KeyboardAvoidingView >
     )
 }
@@ -171,5 +174,14 @@ const styles = StyleSheet.create({
         height: '50%',
         width: '100%',
         justifyContent: 'space-between'
+    },
+    countBadge: {
+        position: 'absolute',
+        bottom: -15,
+        right: -5,
+        color: '#5b5a5a',
+        fontWeight: 'bold',
+        fontSize: 20,
+        fontFamily: 'serif'
     }
 })
