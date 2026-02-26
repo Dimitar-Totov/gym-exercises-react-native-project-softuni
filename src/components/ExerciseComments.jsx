@@ -2,11 +2,15 @@ import { StyleSheet, View, Text, TouchableOpacity, FlatList, ActivityIndicator }
 
 import { X } from "lucide-react-native";
 import { useState } from "react";
+import { useAuth } from "../contexts/auth/useAuth";
+import { useExercises } from "../contexts/exercises/useExercises";
 
-export default function ExerciseComments({ commentsData, onClose }) {
+export default function ExerciseComments({ commentsData, onClose, exerciseId }) {
 
-    const PAGE_SIZE = 5;
+    const PAGE_SIZE = 3;
 
+    const { authState } = useAuth();
+    const { deleteExerciseCommentById } = useExercises();
     const [page, setPage] = useState(1);
     const [visibleComments, setVisibleComments] = useState(
         commentsData.slice(0, PAGE_SIZE)
@@ -52,15 +56,25 @@ export default function ExerciseComments({ commentsData, onClose }) {
         return date.toLocaleDateString('bg-BG', { day: 'numeric', month: 'long', year: 'numeric' });
     }
 
+    async function deleteHandler(exerciseId, commentId) {
+        try {
+            await deleteExerciseCommentById(exerciseId, commentId);
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
     const renderItem = ({ item }) => (
         <View style={styles.profileSection}>
             <View style={styles.comment}>
                 <Text style={styles.author}>{item.username}</Text>
                 <Text>{item.comment}</Text>
             </View>
-            <Text style={{ paddingLeft: 6, marginTop: 2 }}>
-                {timeAgo(item.createdAt)}
-            </Text>
+            <View style={styles.deleteCommentSection}>
+                <Text>
+                    {timeAgo(item.createdAt)}
+                </Text>
+                {authState.user?.id === item.userId && <TouchableOpacity onPress={() => deleteHandler(exerciseId, item.id)}><Text>Delete</Text></TouchableOpacity>}
+            </View>
         </View>
     );
 
@@ -122,5 +136,12 @@ const styles = StyleSheet.create({
     noComments: {
         marginTop: 10,
         fontStyle: 'italic'
+    },
+    deleteCommentSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 15,
+        paddingLeft: 6,
+        marginTop: 2
     }
 })

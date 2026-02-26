@@ -8,6 +8,7 @@ export const ExerciseContext = createContext({
     getExerciseByInput: async (exerciseId) => { },
     getExerciseCommentsById: async (exerciseId) => { },
     postExerciseCommentById: async (exerciseId, userId, comment, username) => { },
+    deleteExerciseCommentById: async (exerciseId, commentId) => { }
 });
 
 export function ExercisesProvider({ children }) {
@@ -18,6 +19,7 @@ export function ExercisesProvider({ children }) {
 
     const getExerciseCommentsById = async (exerciseId) => commentsService.getComments(exerciseId);
     const postExerciseCommentById = async (exerciseId, userId, comment, username) => commentsService.addComment(exerciseId, userId, comment, username);
+    const deleteExerciseCommentById = async (exerciseId, commentId) => commentsService.deleteExerciseCommentById(exerciseId, commentId);
 
     const contextValue = {
         getAllExercises,
@@ -25,7 +27,8 @@ export function ExercisesProvider({ children }) {
         getExerciseById,
         getExerciseByInput,
         getExerciseCommentsById,
-        postExerciseCommentById
+        postExerciseCommentById,
+        deleteExerciseCommentById
     };
 
     return (

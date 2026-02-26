@@ -102,7 +102,7 @@ export default function Details({ route }) {
             <View style={styles.commentsSection}>
                 {commentButtonClick && (
                     <>
-                        <ExerciseComments commentsData={comments} onClose={commentClickHandler} />
+                        <ExerciseComments commentsData={comments} onClose={commentClickHandler} exerciseId={exerciseId} />
                         <View style={styles.writingCommentSection}>
                             <TextInput
                                 style={{ width: '90%' }}
