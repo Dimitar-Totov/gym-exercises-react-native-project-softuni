@@ -58,7 +58,7 @@ export default function Details({ route }) {
     }, [commentButtonClick]);
 
     const postCommentHandler = async () => {
-        if(commentInput.length === 0) return;
+        if (commentInput.length === 0) return;
         try {
             await postExerciseCommentById(exerciseId, authState.user.id, commentInput, authState.user.username);
             setCommentInput('')
@@ -94,29 +94,29 @@ export default function Details({ route }) {
                                     <ThumbsDown size={35} />
                                     <TouchableOpacity onPress={commentClickHandler}><MessageCircle size={35} /></TouchableOpacity>
                                 </View>
-                                <View style={styles.commentsSection}>
-                                    {commentButtonClick && (
-                                        <>
-                                            <ExerciseComments commentsData={comments} onClose={commentClickHandler} />
-                                            <View style={styles.writingCommentSection}>
-                                                <TextInput
-                                                    style={{ width: '90%' }}
-                                                    onChangeText={setCommentInput}
-                                                    value={commentInput}
-                                                    placeholder="Share your thoughts about this exercise..."
-                                                />
-                                                <TouchableOpacity onPress={postCommentHandler}>
-                                                    <SendHorizonal />
-                                                </TouchableOpacity>
-                                            </View>
-                                        </>
-                                    )}
-                                </View>
                             </>
                         )}
                     </View>
                 </TouchableWithoutFeedback>
             </ScrollView>
+            <View style={styles.commentsSection}>
+                {commentButtonClick && (
+                    <>
+                        <ExerciseComments commentsData={comments} onClose={commentClickHandler} />
+                        <View style={styles.writingCommentSection}>
+                            <TextInput
+                                style={{ width: '90%' }}
+                                onChangeText={setCommentInput}
+                                value={commentInput}
+                                placeholder="Share your thoughts about this exercise..."
+                            />
+                            <TouchableOpacity onPress={postCommentHandler}>
+                                <SendHorizonal />
+                            </TouchableOpacity>
+                        </View>
+                    </>
+                )}
+            </View>
         </KeyboardAvoidingView >
     )
 }

@@ -1,8 +1,36 @@
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
 
 import { X } from "lucide-react-native";
+import { useState } from "react";
 
 export default function ExerciseComments({ commentsData, onClose }) {
+
+    const PAGE_SIZE = 5;
+
+    const [page, setPage] = useState(1);
+    const [visibleComments, setVisibleComments] = useState(
+        commentsData.slice(0, PAGE_SIZE)
+    );
+    const [loadingMore, setLoadingMore] = useState(false);
+
+    const loadMore = () => {
+        if (loadingMore) return;
+
+        const start = page * PAGE_SIZE;
+        const end = start + PAGE_SIZE;
+
+        const nextItems = commentsData.slice(start, end);
+
+        if (nextItems.length === 0) return;
+
+        setLoadingMore(true);
+
+        setTimeout(() => {
+            setVisibleComments(prev => [...prev, ...nextItems]);
+            setPage(prev => prev + 1);
+            setLoadingMore(false);
+        }, 300);
+    };
 
     function timeAgo(timestamp) {
         const date = new Date(
@@ -23,7 +51,19 @@ export default function ExerciseComments({ commentsData, onClose }) {
 
         return date.toLocaleDateString('bg-BG', { day: 'numeric', month: 'long', year: 'numeric' });
     }
-    //TODO Add flat list to comments
+
+    const renderItem = ({ item }) => (
+        <View style={styles.profileSection}>
+            <View style={styles.comment}>
+                <Text style={styles.author}>{item.username}</Text>
+                <Text>{item.comment}</Text>
+            </View>
+            <Text style={{ paddingLeft: 6, marginTop: 2 }}>
+                {timeAgo(item.createdAt)}
+            </Text>
+        </View>
+    );
+
     return (
         <View style={styles.commentsContainer}>
             <View style={styles.welcomeHeaderSection}>
@@ -32,16 +72,18 @@ export default function ExerciseComments({ commentsData, onClose }) {
             </View>
             {commentsData.length === 0
                 ? <Text style={styles.noComments}>No comments yet</Text>
-                : commentsData.map(c =>
-                (
-                    <View key={c.id} style={styles.profileSection}>
-                        <View style={styles.comment}>
-                            <Text style={styles.author}>{c.username}</Text>
-                            <Text>{c.comment}</Text>
-                        </View>
-                        <Text style={{paddingLeft: 6,marginTop: 2}}>{timeAgo(c.createdAt)}</Text>
-                    </View>
-                )
+                : (
+                    <FlatList
+                        data={visibleComments}
+                        keyExtractor={(item) => item.id}
+                        renderItem={renderItem}
+                        contentContainerStyle={{ paddingBottom: 20 }}
+                        showsVerticalScrollIndicator={false}
+                        onEndReached={loadMore}
+                        ListFooterComponent={
+                            loadingMore ? <ActivityIndicator style={{ marginVertical: 15 }} /> : null
+                        }
+                    />
                 )}
         </View>
     )
@@ -57,7 +99,8 @@ const styles = StyleSheet.create({
     },
     welcomeHeaderSection: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: 15,
     },
     welcomeHeaderText: {
         fontWeight: 'bold',
