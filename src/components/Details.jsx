@@ -12,32 +12,43 @@ import {
     ActivityIndicator,
 } from "react-native";
 
-import { ThumbsUp, ThumbsDown, MessageCircle, SendHorizonal } from 'lucide-react-native';
+import { ThumbsUp, MessageCircle, SendHorizonal } from 'lucide-react-native';
 
 import { useState, useEffect, useRef } from "react";
 import { useExercises } from "../contexts/exercises/useExercises";
 import { useAuth } from "../contexts/auth/useAuth";
 import ExerciseComments from "./ExerciseComments";
+import { useLikes } from "../hooks/useLikes";
+import { useComments } from "../hooks/useComments";
 
 export default function Details({ route }) {
     const { exerciseId } = route.params;
-    const { getExerciseById, postExerciseCommentById, getExerciseCommentsById } = useExercises();
+    const {
+        getExerciseById,
+        postExerciseCommentById,
+        toggleLikes
+    } = useExercises();
     const { authState } = useAuth();
     const [exercise, setExercise] = useState(null);
     const [commentButtonClick, setCommentButtonClicked] = useState(false);
     const [commentInput, setCommentInput] = useState('');
-    const [comments, setComments] = useState([]);
     const scrollViewRef = useRef(null);
+    const [likesCount,setLikesCount] = useState(0)
+
+    const likes = useLikes(exerciseId);
+    const comments = useComments(exerciseId);
+
+    const liked = likes.includes(authState.user?.id);
 
     const commentClickHandler = () => {
         setCommentButtonClicked(!commentButtonClick)
     }
 
+    useEffect(() => setLikesCount(likes.length) ,[likes])
+
     useEffect(() => {
         async function fetchExercise() {
             try {
-                const comments = await getExerciseCommentsById(exerciseId);
-                setComments(comments)
                 const result = await getExerciseById(exerciseId);
                 setExercise(result);
             } catch (error) {
@@ -67,6 +78,10 @@ export default function Details({ route }) {
         }
     }
 
+    const likePressHandler = async () => {
+        await toggleLikes(exerciseId, authState.user?.id);
+    }
+
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -90,8 +105,10 @@ export default function Details({ route }) {
                                     </Text>
                                 </View>
                                 <View style={styles.buttons}>
-                                    <ThumbsUp size={35} />
-                                    <ThumbsDown size={35} />
+                                    <View>
+                                        <TouchableOpacity onPress={likePressHandler} disabled={!authState.user}><ThumbsUp size={35} color={liked ? '#fff' : '#323232'} fill={liked ? '#1d4dd3' : 'none'} /></TouchableOpacity>
+                                        <Text style={styles.countBadge}>{likesCount}</Text>
+                                    </View>
                                     <View>
                                         <TouchableOpacity onPress={commentClickHandler}><MessageCircle size={35} /></TouchableOpacity>
                                         <Text style={styles.countBadge}>{comments.length}</Text>
@@ -105,7 +122,7 @@ export default function Details({ route }) {
             {commentButtonClick && (
                 <View style={styles.commentsSection}>
                     <>
-                        <ExerciseComments commentsData={comments} onClose={commentClickHandler} exerciseId={exerciseId} />
+                        <ExerciseComments onClose={commentClickHandler} exerciseId={exerciseId} />
                         {authState.user &&
                             <View style={styles.writingCommentSection}>
                                 <TextInput
@@ -178,10 +195,10 @@ const styles = StyleSheet.create({
     countBadge: {
         position: 'absolute',
         bottom: -15,
-        right: -5,
-        color: '#5b5a5a',
+        right: -10,
+        color: '#444343',
         fontWeight: 'bold',
         fontSize: 20,
-        fontFamily: 'serif'
+        fontFamily: 'serif',
     }
 })

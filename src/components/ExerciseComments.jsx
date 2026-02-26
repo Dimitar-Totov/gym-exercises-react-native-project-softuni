@@ -1,21 +1,29 @@
 import { StyleSheet, View, Text, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
 
 import { X } from "lucide-react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/auth/useAuth";
 import { useExercises } from "../contexts/exercises/useExercises";
+import { useComments } from "../hooks/useComments";
 
-export default function ExerciseComments({ commentsData, onClose, exerciseId }) {
+export default function ExerciseComments({ onClose, exerciseId }) {
+
+    const { authState } = useAuth();
+    const [loadingMore, setLoadingMore] = useState(false);
+    const commentsData = useComments(exerciseId);
 
     const PAGE_SIZE = 3;
 
-    const { authState } = useAuth();
     const { deleteExerciseCommentById } = useExercises();
     const [page, setPage] = useState(1);
     const [visibleComments, setVisibleComments] = useState(
         commentsData.slice(0, PAGE_SIZE)
     );
-    const [loadingMore, setLoadingMore] = useState(false);
+
+    useEffect(() => {
+        setVisibleComments(commentsData.slice(0, PAGE_SIZE));
+        setPage(1);
+    }, [commentsData]);
 
     const loadMore = () => {
         if (loadingMore) return;
@@ -37,6 +45,7 @@ export default function ExerciseComments({ commentsData, onClose, exerciseId }) 
     };
 
     function timeAgo(timestamp) {
+        if (!timestamp) return "Just now";
         const date = new Date(
             timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000)
         );

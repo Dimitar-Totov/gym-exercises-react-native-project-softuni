@@ -56,7 +56,8 @@ export function AuthProvider({ children }) {
             setAuthState({
                 user: {
                     id: user.uid,
-                    email: user.email
+                    email: user.email,
+                    username: username,
                 }
             })
         } catch (error) {

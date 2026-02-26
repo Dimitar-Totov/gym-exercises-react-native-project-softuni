@@ -1,14 +1,14 @@
-import { createContext, useEffect, useState } from "react";
-import { commentsService, exerciseService } from "../../services";
+import { createContext } from "react";
+import { commentsService, exerciseService, likesService } from "../../services";
 
 export const ExerciseContext = createContext({
     getAllExercises: async () => { },
     getExerciseByType: async (typeOfExercise) => { },
     getExerciseById: async (exerciseId) => { },
     getExerciseByInput: async (exerciseId) => { },
-    getExerciseCommentsById: async (exerciseId) => { },
     postExerciseCommentById: async (exerciseId, userId, comment, username) => { },
-    deleteExerciseCommentById: async (exerciseId, commentId) => { }
+    deleteExerciseCommentById: async (exerciseId, commentId) => { },
+    toggleLikes: async (exerciseId, userId) => { }
 });
 
 export function ExercisesProvider({ children }) {
@@ -17,18 +17,19 @@ export function ExercisesProvider({ children }) {
     const getExerciseById = async (exerciseId) => await exerciseService.getById(exerciseId);
     const getExerciseByInput = async (input) => await exerciseService.getByInput(input);
 
-    const getExerciseCommentsById = async (exerciseId) => commentsService.getComments(exerciseId);
     const postExerciseCommentById = async (exerciseId, userId, comment, username) => commentsService.addComment(exerciseId, userId, comment, username);
     const deleteExerciseCommentById = async (exerciseId, commentId) => commentsService.deleteExerciseCommentById(exerciseId, commentId);
+
+    const toggleLikes = async (exerciseId, userId) => likesService.toggleLikes(exerciseId, userId);
 
     const contextValue = {
         getAllExercises,
         getExerciseByType,
         getExerciseById,
         getExerciseByInput,
-        getExerciseCommentsById,
         postExerciseCommentById,
-        deleteExerciseCommentById
+        deleteExerciseCommentById,
+        toggleLikes
     };
 
     return (
