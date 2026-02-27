@@ -24,8 +24,21 @@ import { useExercises } from '../contexts/exercises/useExercises';
 export default function HomeScreen({ navigation }) {
     const [text, setText] = useState('');
     const [searchedExercises, setSearchedExercises] = useState([]);
-    const { getExerciseByInput } = useExercises();
+    const { getExerciseByInput, getThreeMostLikedExercises } = useExercises();
+    const [threeMostLiked, setThreeMostLiked] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        async function load() {
+            try {
+                const data = await getThreeMostLikedExercises();
+                setThreeMostLiked(data);
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+        load()
+    }, [])
 
     useEffect(() => {
         setLoading(true);
@@ -64,7 +77,7 @@ export default function HomeScreen({ navigation }) {
                                 {loading && <ActivityIndicator size={40} color="#21ef21" />}
                                 {text ? <ExcercisesHomepage searching={searchedExercises} /> : ''}
                             </View>
-                            <PopularExercises navigation={navigation} />
+                            <PopularExercises navigation={navigation} mostLiked={threeMostLiked} />
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>

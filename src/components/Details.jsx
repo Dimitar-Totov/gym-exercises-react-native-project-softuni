@@ -3,12 +3,9 @@ import {
     StyleSheet,
     Text, View,
     ScrollView,
-    TextInput,
     TouchableOpacity,
     TouchableWithoutFeedback,
-    KeyboardAvoidingView,
     Keyboard,
-    Platform,
     ActivityIndicator,
 } from "react-native";
 

@@ -1,6 +1,6 @@
-import { Text, View, Image, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function PopularExercises({ navigation }) {
+export default function PopularExercises({ navigation, mostLiked }) {
 
     const viewAllPressHandler = () => navigation.navigate('Exercises');
 
@@ -13,45 +13,30 @@ export default function PopularExercises({ navigation }) {
                 </TouchableOpacity>
             </View>
             <View style={{ flexDirection: 'columns', justifyContent: 'center' }}>
-                <View style={style.popularExerciseCardContainer}>
-                    <Image style={style.popularExercisesImage} source={require('../../assets/bench-press.jpg')} />
-                    <View style={{ flexDirection: 'row', width: '83%', justifyContent: 'space-between' }}>
-                        <Text style={style.popularExercisesText}>Bench Press</Text>
-                        {/* It has to navigate and all others */}
-                        <Text style={{ fontFamily: 'sans-serif-light', fontStyle: 'italic' }}>Learn more...</Text>
-                    </View>
-                </View>
-                <View style={style.popularExerciseCardContainer}>
-                    <Image style={style.popularExercisesImage} source={require('../../assets/pull-up.webp')} />
-                    <View style={{ flexDirection: 'row', width: '83%', justifyContent: 'space-between' }}>
-                        <Text style={style.popularExercisesText}>Pull Up</Text>
-                        <Text style={{ fontFamily: 'sans-serif-light', fontStyle: 'italic' }}>Learn more...</Text>
-                    </View>
-                </View>
-                <View style={style.popularExerciseCardContainer}>
-                    <Image style={style.popularExercisesImage} source={require('../../assets/squat.jpg')} />
-                    <View style={{ flexDirection: 'row', width: '83%', justifyContent: 'space-between' }}>
-                        <Text style={style.popularExercisesText}>Squat</Text>
-                        <Text style={{ fontFamily: 'sans-serif-light', fontStyle: 'italic' }}>Learn more...</Text>
-                    </View>
-                </View>
-                <View style={style.popularExerciseCardContainer}>
-                    <Image style={style.popularExercisesImage} source={require('../../assets/curl.webp')} />
-                    <View style={{ flexDirection: 'row', width: '83%', justifyContent: 'space-between' }}>
-                        <Text style={style.popularExercisesText}>Curl</Text>
-                        <Text style={{ fontFamily: 'sans-serif-light', fontStyle: 'italic' }}>Learn more...</Text>
-                    </View>
+                <View style={styles.popularExerciseCardContainer}>
+                    {mostLiked.map((e) =>
+                        <View key={e.id} style={styles.card}>
+                            <Image style={styles.popularExercisesImage} source={{ uri: e?.['image-url'] }} />
+                            <View style={{ flexDirection: 'row', width: '83%', justifyContent: 'space-between' }}>
+                                <Text style={styles.popularExercisesText}>{e.name}</Text>
+                                <TouchableOpacity onPress={() => navigation.navigate('Details Page', {exerciseId: e.id})}><Text style={styles.button}>Learn more...</Text></TouchableOpacity>
+                            </View>
+                        </View>
+                    )}
                 </View>
             </View>
         </View>
     )
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     popularExerciseCardContainer: {
         width: '100%',
-        alignItems: 'center',
         marginBottom: 30,
+    },
+    card: {
+        alignItems: 'center',
+        marginBottom: 20,
     },
     popularExercisesText: {
         fontSize: 17,
@@ -64,4 +49,8 @@ const style = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 10
     },
+    button: {
+        fontFamily: 'sans-serif-light',
+        fontStyle: 'italic'
+    }
 })

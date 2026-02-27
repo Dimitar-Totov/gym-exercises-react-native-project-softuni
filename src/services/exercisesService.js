@@ -1,4 +1,15 @@
-import { collection, getDocs, query, where, getDoc, doc, orderBy, startAt, endAt } from "firebase/firestore";
+import {
+    collection,
+    getDocs,
+    query,
+    where,
+    getDoc,
+    doc,
+    orderBy,
+    limit,
+    startAt,
+    endAt
+} from "firebase/firestore";
 import { database } from "../firebaseConfig";
 
 export async function getAll() {
@@ -41,5 +52,22 @@ export async function getByInput(input) {
         id: doc.id,
         name: doc.data().name,
         image: doc.data()["image-url"]
+    }));
+}
+
+export async function getTop3Exercises() {
+    const exercisesRef = collection(database, "exercises");
+
+    const q = query(
+        exercisesRef,
+        orderBy("likesCount", "desc"),
+        limit(3)
+    );
+
+    const snapshot = await getDocs(q);
+
+    return snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
     }));
 }
