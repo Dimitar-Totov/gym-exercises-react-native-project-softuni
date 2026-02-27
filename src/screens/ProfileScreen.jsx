@@ -5,10 +5,12 @@ import { CalendarPlus, ChevronRight, LogOut, Settings, UserPen } from "lucide-re
 import * as ImagePicker from "expo-image-picker";
 
 import { useAuth } from "../contexts/auth/useAuth";
+import EditProfileModal from "../components/EditProfileModal";
 
 export default function ProfileScreen() {
     const [image, setImage] = useState(null);
-    const { authState, logout } = useAuth()
+    const { authState, logout } = useAuth();
+    const [isEditFieldVisible, setIsEditFieldVisible] = useState(false);
 
     const pickImage = async () => {
         const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -27,9 +29,10 @@ export default function ProfileScreen() {
             setImage(result.assets[0].uri);
         }
     };
- 
+
     return (
         <View style={styles.container}>
+            {isEditFieldVisible && <EditProfileModal onClose={() => setIsEditFieldVisible(false)} />}
             <Pressable style={styles.imageWrapper} onPress={pickImage}>
                 {image ? (
                     <Image source={{ uri: image }} style={styles.profileImage} />
@@ -42,20 +45,15 @@ export default function ProfileScreen() {
                 <Text style={styles.email}>{authState.user.email}</Text>
             </View>
             <View style={styles.optionsSection}>
-                <View style={styles.optionContainer}>
-                    <View style={styles.option}>
-                        <UserPen color={styles.optionIcons.color} />
-                        <Text style={styles.optionText}>Edit Profile</Text>
+                <TouchableOpacity onPress={() => setIsEditFieldVisible(true)}>
+                    <View style={styles.optionContainer}>
+                        <View style={styles.option}>
+                            <UserPen color={styles.optionIcons.color} />
+                            <Text style={styles.optionText}>Edit Profile</Text>
+                        </View>
+                        <ChevronRight color={styles.optionIcons.color} />
                     </View>
-                    <ChevronRight color={styles.optionIcons.color} />
-                </View>
-                <View style={styles.optionContainer}>
-                    <View style={styles.option}>
-                        <Settings color={styles.optionIcons.color} />
-                        <Text style={styles.optionText}>Settings</Text>
-                    </View>
-                    <ChevronRight color={styles.optionIcons.color} />
-                </View>
+                </TouchableOpacity>
                 <View style={styles.optionContainer}>
                     <View style={styles.option}>
                         <CalendarPlus color={styles.optionIcons.color} />
