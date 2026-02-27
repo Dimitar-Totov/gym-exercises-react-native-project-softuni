@@ -12,13 +12,18 @@ import {
 
 import { X, Eye, EyeOff } from "lucide-react-native";
 
-import { useAuth } from "../contexts/auth/useAuth";
 import { useState } from "react";
 
-export default function EditProfileModal({ onClose }) {
+export default function EditProfileModal({ onClose, userData }) {
 
-    const { authState } = useAuth();
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [newUsername, setNewUsername] = useState('');
+    const [newEmail, setNewEmail] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [newRePassword, setNewRePassword] = useState('');
+
+    console.log(newUsername, newEmail, newPassword, newRePassword);
+
 
     return (
         <KeyboardAvoidingView
@@ -36,20 +41,20 @@ export default function EditProfileModal({ onClose }) {
                     <View style={styles.content}>
                         <View>
                             <Text style={styles.label}>Username</Text>
-                            <TextInput defaultValue={authState.user.username} style={styles.inputField} />
+                            <TextInput defaultValue={userData.username} onChangeText={setNewUsername} style={styles.inputField} />
                         </View>
                         <View>
                             <Text style={styles.label}>Email</Text>
-                            <TextInput defaultValue={authState.user.email} style={styles.inputField} />
+                            <TextInput defaultValue={userData.email} onChangeText={setNewEmail} style={styles.inputField} />
                         </View>
                         <View>
                             <Text style={styles.label}>New Password</Text>
-                            <TextInput secureTextEntry={!passwordVisible} style={styles.inputField} />
+                            <TextInput onChangeText={setNewPassword} secureTextEntry={!passwordVisible} style={styles.inputField} />
                             {passwordVisible ? <Eye onPress={() => setPasswordVisible(false)} style={styles.showPassword} /> : <EyeOff onPress={() => setPasswordVisible(true)} style={styles.showPassword} />}
                         </View>
                         <View>
                             <Text style={styles.label}>Re Password</Text>
-                            <TextInput secureTextEntry={!passwordVisible} style={styles.inputField} />
+                            <TextInput onChangeText={setNewRePassword} secureTextEntry={!passwordVisible} style={styles.inputField} />
                             {passwordVisible ? <Eye onPress={() => setPasswordVisible(false)} style={styles.showPassword} /> : <EyeOff onPress={() => setPasswordVisible(true)} style={styles.showPassword} />}
                         </View>
                     </View>

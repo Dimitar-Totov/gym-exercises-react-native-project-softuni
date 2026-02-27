@@ -32,7 +32,7 @@ export default function ProfileScreen() {
 
     return (
         <View style={styles.container}>
-            {isEditFieldVisible && <EditProfileModal onClose={() => setIsEditFieldVisible(false)} />}
+            {isEditFieldVisible && <EditProfileModal onClose={() => setIsEditFieldVisible(false)} userData={authState.user} />}
             <Pressable style={styles.imageWrapper} onPress={pickImage}>
                 {image ? (
                     <Image source={{ uri: image }} style={styles.profileImage} />

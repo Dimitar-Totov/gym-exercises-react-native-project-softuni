@@ -128,10 +128,6 @@ export default function ExerciseComments({ onClose, exerciseId, commentsData }) 
                     />
                 )}
             {authState.user &&
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-                    keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
-                >
                     <View style={styles.writeCommentSection}>
                         <TextInput
                             style={styles.writeCommentInput}
@@ -143,7 +139,6 @@ export default function ExerciseComments({ onClose, exerciseId, commentsData }) 
                             <SendHorizonal />
                         </TouchableOpacity>
                     </View>
-                </KeyboardAvoidingView >
             }
         </View>
     )
