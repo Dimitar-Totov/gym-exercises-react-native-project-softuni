@@ -15,7 +15,7 @@ export default function ExcercisesHomepage({ searching }) {
 
     useEffect(() => {
         if (searching?.length === 0) {
-            const timer = setTimeout(() => setShowNoMatches(true), 2000);
+            const timer = setTimeout(() => setShowNoMatches(true), 1000);
             return () => clearTimeout(timer);
         } else {
             setShowNoMatches(false);

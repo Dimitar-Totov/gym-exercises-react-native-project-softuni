@@ -17,5 +17,5 @@ export function useLikes(exerciseId) {
         return () => unsubscribe(); 
     }, [exerciseId]);
 
-    return likes;
+    return likes; 
 }
