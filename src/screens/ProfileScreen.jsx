@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Pressable, Image, TouchableOpacity } from "react-native";
 
 import { CalendarPlus, ChevronRight, LogOut, Settings, UserPen } from "lucide-react-native";

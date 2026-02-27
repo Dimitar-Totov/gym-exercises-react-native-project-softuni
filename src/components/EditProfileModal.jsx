@@ -9,21 +9,29 @@ import {
     Platform,
     Keyboard
 } from "react-native";
+import { useState } from "react";
 
 import { X, Eye, EyeOff } from "lucide-react-native";
 
-import { useState } from "react";
+import { useAuth } from "../contexts/auth/useAuth";
 
 export default function EditProfileModal({ onClose, userData }) {
 
+    const { updateUser, logout } = useAuth();
+
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [newUsername, setNewUsername] = useState('');
-    const [newEmail, setNewEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [newRePassword, setNewRePassword] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
 
-    console.log(newUsername, newEmail, newPassword, newRePassword);
-
+    const updatePressHandler = async () => {
+        try {
+            await updateUser(newUsername, newPassword, currentPassword);
+            logout();
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
 
     return (
         <KeyboardAvoidingView
@@ -44,22 +52,18 @@ export default function EditProfileModal({ onClose, userData }) {
                             <TextInput defaultValue={userData.username} onChangeText={setNewUsername} style={styles.inputField} />
                         </View>
                         <View>
-                            <Text style={styles.label}>Email</Text>
-                            <TextInput defaultValue={userData.email} onChangeText={setNewEmail} style={styles.inputField} />
+                            <Text style={styles.label}>Current Password</Text>
+                            <TextInput onChangeText={setCurrentPassword} secureTextEntry={!passwordVisible} style={styles.inputField} />
+                            {passwordVisible ? <Eye onPress={() => setPasswordVisible(false)} style={styles.showPassword} /> : <EyeOff onPress={() => setPasswordVisible(true)} style={styles.showPassword} />}
                         </View>
                         <View>
                             <Text style={styles.label}>New Password</Text>
                             <TextInput onChangeText={setNewPassword} secureTextEntry={!passwordVisible} style={styles.inputField} />
                             {passwordVisible ? <Eye onPress={() => setPasswordVisible(false)} style={styles.showPassword} /> : <EyeOff onPress={() => setPasswordVisible(true)} style={styles.showPassword} />}
                         </View>
-                        <View>
-                            <Text style={styles.label}>Re Password</Text>
-                            <TextInput onChangeText={setNewRePassword} secureTextEntry={!passwordVisible} style={styles.inputField} />
-                            {passwordVisible ? <Eye onPress={() => setPasswordVisible(false)} style={styles.showPassword} /> : <EyeOff onPress={() => setPasswordVisible(true)} style={styles.showPassword} />}
-                        </View>
                     </View>
                     <View style={styles.submitContainer}>
-                        <TouchableOpacity style={styles.updateButton}><Text>Update</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={updatePressHandler} style={styles.updateButton}><Text>Update</Text></TouchableOpacity>
                     </View>
                 </View>
             </TouchableWithoutFeedback>

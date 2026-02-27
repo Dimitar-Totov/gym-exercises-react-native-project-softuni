@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 
-import { authService } from '../../services/index.js'
+import { authService, profileService } from '../../services/index.js'
 import { auth } from "../../firebaseConfig.js";
 
 export const AuthContext = createContext({
@@ -10,7 +10,8 @@ export const AuthContext = createContext({
     logout: () => { },
     authError: null,
     authState: {},
-    isAuthenticated: false
+    isAuthenticated: false,
+    updateUser: async (username, password, currentPassword) => { },
 });
 
 export function AuthProvider({ children }) {
@@ -65,6 +66,8 @@ export function AuthProvider({ children }) {
         }
     }
 
+    const updateUser = async (username, password, currentPassword) => profileService.updateUser(username, password, currentPassword)
+
     const contextValue = {
         register,
         login,
@@ -81,6 +84,7 @@ export function AuthProvider({ children }) {
         authError,
         authState,
         isAuthenticated: !!authState.user,
+        updateUser,
     }
 
     return (
