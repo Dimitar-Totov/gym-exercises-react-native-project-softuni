@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Image, StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native";
 import { useAuth } from "../contexts/auth/useAuth";
 
+import { Eye, EyeOff } from "lucide-react-native";
+
 export default function SignUp() {
 
     const [username, setUsername] = useState('');
@@ -10,6 +12,7 @@ export default function SignUp() {
     const [password, setPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
     const { register, authError } = useAuth();
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
     const registerPressHandler = async () => {
         await register(email, password, username)
@@ -26,8 +29,14 @@ export default function SignUp() {
                     <View style={styles.inputSection}>
                         <TextInput placeholder='username' value={username} onChangeText={setUsername} style={styles.inputs} />
                         <TextInput placeholder='e-mail' value={email} keyboardType="email-address" onChangeText={setEmail} style={styles.inputs} />
-                        <TextInput placeholder='password' value={password} secureTextEntry onChangeText={setPassword} style={styles.inputs} />
-                        <TextInput placeholder='repeat-password' value={rePassword} secureTextEntry onChangeText={setRePassword} style={styles.inputs} />
+                        <View style={{ width: '100%', alignItems: 'center' }}>
+                            <TextInput placeholder='password' value={password} secureTextEntry={!passwordVisible} onChangeText={setPassword} style={styles.inputs} />
+                            {passwordVisible ? <Eye style={styles.showPasswordButton} onPress={() => setPasswordVisible(false)} /> : <EyeOff style={styles.showPasswordButton} onPress={() => setPasswordVisible(true)} />}
+                        </View>
+                        <View style={{ width: '100%', alignItems: 'center' }}>
+                            <TextInput placeholder='repeat-password' value={rePassword} secureTextEntry={!passwordVisible} onChangeText={setRePassword} style={styles.inputs} />
+                            {passwordVisible ? <Eye style={styles.showPasswordButton} onPress={() => setPasswordVisible(false)} /> : <EyeOff style={styles.showPasswordButton} onPress={() => setPasswordVisible(true)} />}
+                        </View>
                     </View>
                     <View style={styles.anotherAccountSection}>
                         <Text style={{ fontSize: 20, color: '#4f4e4e', marginBottom: 20 }}>Sign up with another account</Text>
@@ -71,6 +80,7 @@ const styles = StyleSheet.create({
         gap: 20
     },
     inputs: {
+        paddingRight: 50,
         backgroundColor: 'white',
         width: '75%',
         height: 50,
@@ -104,4 +114,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#fff'
     },
+    showPasswordButton: {
+        position: 'absolute',
+        top: 15,
+        right: 70,
+    }
 })

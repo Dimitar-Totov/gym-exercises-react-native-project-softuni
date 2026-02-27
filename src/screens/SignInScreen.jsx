@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Image, StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native";
 
+import { Eye, EyeOff } from "lucide-react-native";
+
 import { useAuth } from "../contexts/auth/useAuth";
 
 export default function SignInScreen({ navigation }) {
@@ -8,6 +10,7 @@ export default function SignInScreen({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { login } = useAuth()
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
     const signUpPressHandler = () => navigation.navigate('SignUp');
 
@@ -28,7 +31,10 @@ export default function SignInScreen({ navigation }) {
                     </View>
                     <View style={styles.inputSection}>
                         <TextInput placeholder='e-mail' value={email} keyboardType="email-address" onChangeText={setEmail} style={styles.inputs} />
-                        <TextInput placeholder='password' value={password} secureTextEntry onChangeText={setPassword} style={styles.inputs} />
+                        <View style={{ width: '100%', alignItems: 'center' }}>
+                            <TextInput placeholder='password' value={password} secureTextEntry={!passwordVisible} onChangeText={setPassword} style={styles.inputs} />
+                            {passwordVisible ? <Eye style={styles.showPasswordButton} onPress={() => setPasswordVisible(false)} hitSlop={10}/> : <EyeOff style={styles.showPasswordButton} onPress={() => setPasswordVisible(true)} hitSlop={10}/>}
+                        </View>
                     </View>
                     <View style={styles.anotherAccountSection}>
                         <Text style={{ fontSize: 20, color: '#4f4e4e', marginBottom: 20 }}>Sign in with another account</Text>
@@ -87,6 +93,7 @@ const styles = StyleSheet.create({
         gap: 20
     },
     inputs: {
+        paddingRight: 50,
         backgroundColor: 'white',
         width: '75%',
         height: 50,
@@ -124,5 +131,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginTop: 10
+    },
+    showPasswordButton: {
+        position: 'absolute',
+        top: 14,
+        right: 70
     }
 })

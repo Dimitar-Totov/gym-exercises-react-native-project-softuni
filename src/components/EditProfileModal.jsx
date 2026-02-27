@@ -54,12 +54,12 @@ export default function EditProfileModal({ onClose, userData }) {
                         <View>
                             <Text style={styles.label}>Current Password</Text>
                             <TextInput onChangeText={setCurrentPassword} secureTextEntry={!passwordVisible} style={styles.inputField} />
-                            {passwordVisible ? <Eye onPress={() => setPasswordVisible(false)} style={styles.showPassword} /> : <EyeOff onPress={() => setPasswordVisible(true)} style={styles.showPassword} />}
+                            {passwordVisible ? <Eye onPress={() => setPasswordVisible(false)} style={styles.showPassword} hitSlop={10}/> : <EyeOff onPress={() => setPasswordVisible(true)} style={styles.showPassword} hitSlop={10}/>}
                         </View>
                         <View>
                             <Text style={styles.label}>New Password</Text>
                             <TextInput onChangeText={setNewPassword} secureTextEntry={!passwordVisible} style={styles.inputField} />
-                            {passwordVisible ? <Eye onPress={() => setPasswordVisible(false)} style={styles.showPassword} /> : <EyeOff onPress={() => setPasswordVisible(true)} style={styles.showPassword} />}
+                            {passwordVisible ? <Eye onPress={() => setPasswordVisible(false)} style={styles.showPassword} hitSlop={10}/> : <EyeOff onPress={() => setPasswordVisible(true)} style={styles.showPassword} hitSlop={10}/>}
                         </View>
                     </View>
                     <View style={styles.submitContainer}>
