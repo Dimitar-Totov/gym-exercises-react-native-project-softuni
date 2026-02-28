@@ -20,16 +20,25 @@ export default function EditProfileModal({ onClose, userData }) {
     const { updateUser, logout } = useAuth();
 
     const [passwordVisible, setPasswordVisible] = useState(false);
-    const [newUsername, setNewUsername] = useState('');
+    const [newUsername, setNewUsername] = useState(userData.username);
     const [newPassword, setNewPassword] = useState('');
     const [currentPassword, setCurrentPassword] = useState('');
-
+    const passwordValidator = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    const [error, setError] = useState('');
     const updatePressHandler = async () => {
         try {
+            if (newUsername.length <= 2) {
+                throw new Error('Username is too short')
+            }
+
+            if (!passwordValidator.test(newPassword)) {
+                throw new Error('Password must be at least 6 characters long and include at least uppercase letter, lowercase letter, number, and special character')
+            }
             await updateUser(newUsername, newPassword, currentPassword);
             logout();
         } catch (err) {
-            console.log(err.message);
+            setError(err.message)
+            setTimeout(() => setError(''), 4000)
         }
     };
 
@@ -54,12 +63,12 @@ export default function EditProfileModal({ onClose, userData }) {
                         <View>
                             <Text style={styles.label}>Current Password</Text>
                             <TextInput onChangeText={setCurrentPassword} secureTextEntry={!passwordVisible} style={styles.inputField} />
-                            {passwordVisible ? <Eye onPress={() => setPasswordVisible(false)} style={styles.showPassword} hitSlop={10}/> : <EyeOff onPress={() => setPasswordVisible(true)} style={styles.showPassword} hitSlop={10}/>}
+                            {passwordVisible ? <Eye onPress={() => setPasswordVisible(false)} style={styles.showPassword} hitSlop={10} /> : <EyeOff onPress={() => setPasswordVisible(true)} style={styles.showPassword} hitSlop={10} />}
                         </View>
                         <View>
                             <Text style={styles.label}>New Password</Text>
                             <TextInput onChangeText={setNewPassword} secureTextEntry={!passwordVisible} style={styles.inputField} />
-                            {passwordVisible ? <Eye onPress={() => setPasswordVisible(false)} style={styles.showPassword} hitSlop={10}/> : <EyeOff onPress={() => setPasswordVisible(true)} style={styles.showPassword} hitSlop={10}/>}
+                            {passwordVisible ? <Eye onPress={() => setPasswordVisible(false)} style={styles.showPassword} hitSlop={10} /> : <EyeOff onPress={() => setPasswordVisible(true)} style={styles.showPassword} hitSlop={10} />}
                         </View>
                     </View>
                     <View style={styles.submitContainer}>
@@ -67,6 +76,7 @@ export default function EditProfileModal({ onClose, userData }) {
                     </View>
                 </View>
             </TouchableWithoutFeedback>
+            {error && <Text style={styles.errorMessage}>{error}</Text>}
         </KeyboardAvoidingView>
     );
 }
@@ -128,5 +138,16 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 15,
         top: 44,
+    },
+    errorMessage: {
+        position: 'absolute',
+        bottom: 30,
+        left: 20,
+        fontSize: 20,
+        color: 'red',
+        textAlign: 'center',
+        backgroundColor: '#fff',
+        padding: 10,
+        borderRadius: 10
     }
 });

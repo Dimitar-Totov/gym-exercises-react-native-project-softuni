@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView, ActivityIndicator } from "react-native";
+import { StyleSheet, View, ScrollView, ActivityIndicator, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect } from "react";
 
@@ -10,15 +10,20 @@ export default function CatalogScreen() {
     const { getExerciseByType, getAllExercises } = useExercises();
     const [exercises, setExercises] = useState([]);
     const [selected, setSelected] = useState("upper");
+    const [error, setError] = useState('')
 
     useEffect(() => {
         async function load() {
-            if (selected === "full") {
-                const result = await getAllExercises();
-                setExercises(result);
-            } else {
-                const result = await getExerciseByType(selected);
-                setExercises(result);
+            try {
+                if (selected === "full") {
+                    const result = await getAllExercises();
+                    setExercises(result);
+                } else {
+                    const result = await getExerciseByType(selected);
+                    setExercises(result);
+                }
+            } catch (error) {
+                setError(error.message)
             }
         }
         load();
@@ -32,7 +37,8 @@ export default function CatalogScreen() {
                     <FilterButton label="Lower Body" value="lower" selected={selected} onPress={setSelected} />
                     <FilterButton label="Full Body" value="full" selected={selected} onPress={setSelected} />
                 </View>
-                {exercises.length === 0 ? <ActivityIndicator style={{ marginTop: 30 }} size={50} color="#21ef21" /> : ''}
+                {error && <Text style={styles.errorMessage}>{error}</Text>}
+                {exercises.length === 0 ? <ActivityIndicator style={{ marginTop: 30 }} size={50} color="#21ef21"  /> : ''}
                 <ScrollView contentContainerStyle={{ width: '100%', alignItems: 'center', flexGrow: 1, paddingBottom: 10 }}>
                     <View style={styles.exercises}>
                         {exercises.map(exercise => <ExerciseCard key={exercise.id} exerciseData={exercise} />)}
@@ -71,5 +77,10 @@ const styles = StyleSheet.create({
         width: '90%',
         gap: 10,
     },
-
+    errorMessage: {
+        position: 'absolute',
+        top: '30%',
+        left: '45%',
+        fontSize: 20
+    }
 })

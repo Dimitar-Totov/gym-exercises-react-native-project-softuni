@@ -27,6 +27,8 @@ export default function HomeScreen({ navigation }) {
     const { getExerciseByInput, getThreeMostLikedExercises } = useExercises();
     const [threeMostLiked, setThreeMostLiked] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [mostLikedError, setMostLikedError] = useState('');
+    const [searchExerciseError, setSearchExerciseError] = useState('');
 
     useEffect(() => {
         async function load() {
@@ -34,7 +36,7 @@ export default function HomeScreen({ navigation }) {
                 const data = await getThreeMostLikedExercises();
                 setThreeMostLiked(data);
             } catch (error) {
-                console.log(error.message);
+                setMostLikedError(error.message)
             }
         }
         load()
@@ -43,9 +45,13 @@ export default function HomeScreen({ navigation }) {
     useEffect(() => {
         setLoading(true);
         async function loadData() {
-            const result = await getExerciseByInput(text);
-            setSearchedExercises(result);
-            setLoading(false)
+            try {
+                const result = await getExerciseByInput(text);
+                setSearchedExercises(result);
+                setLoading(false)
+            } catch (error) {
+                setSearchExerciseError(error.message);
+            }
         }
         loadData();
     }, [text]);
@@ -76,8 +82,9 @@ export default function HomeScreen({ navigation }) {
                                 }
                                 {loading && <ActivityIndicator size={40} color="#21ef21" />}
                                 {text ? <ExcercisesHomepage searching={searchedExercises} /> : ''}
+                                {searchExerciseError && <Text style={styles.errorMessage}>{searchExerciseError}</Text>}
                             </View>
-                            <PopularExercises navigation={navigation} mostLiked={threeMostLiked} />
+                            <PopularExercises navigation={navigation} mostLiked={threeMostLiked} errorMessage={mostLikedError} />
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>
@@ -119,5 +126,10 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 11,
         right: 30,
+    },
+    errorMessage: {
+        position: 'absolute',
+        bottom: -15,
+        fontSize: 20
     }
 })

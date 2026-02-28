@@ -1,9 +1,10 @@
 import { useState } from "react";
-
 import { Image, StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native";
-import { useAuth } from "../contexts/auth/useAuth";
 
 import { Eye, EyeOff } from "lucide-react-native";
+
+import { useAuth } from "../contexts/auth/useAuth";
+import ErrorText from "./ErrorText";
 
 export default function SignUp() {
 
@@ -14,8 +15,35 @@ export default function SignUp() {
     const { register, authError } = useAuth();
     const [passwordVisible, setPasswordVisible] = useState(false);
 
+    const emailValidator = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const passwordValidator = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    const [signUpError, setSignUpError] = useState('');
+
     const registerPressHandler = async () => {
-        await register(email, password, username)
+        try {
+            if (username.length <= 2) {
+                throw new Error('Username is too short');
+            }
+
+            if (!emailValidator.test(email)) {
+                throw new Error('Invalid email');
+            }
+
+            if (!passwordValidator.test(password)) {
+                throw new Error('Password must be at least 6 characters long and include at least uppercase letter, lowercase letter, number, and special character');
+            }
+
+            if (password !== rePassword) {
+                throw new Error('Password missmatched');
+            }
+
+            const result = await register(email, password, username)
+            if (result === undefined) { throw new Error('A user with this email already exists') }
+        } catch (error) {
+            setSignUpError(error.message);
+            setTimeout(() => setSignUpError(''), 4000);
+        }
+
     }
 
     return (
@@ -37,6 +65,7 @@ export default function SignUp() {
                             <TextInput placeholder='repeat-password' value={rePassword} secureTextEntry={!passwordVisible} onChangeText={setRePassword} style={styles.inputs} />
                             {passwordVisible ? <Eye style={styles.showPasswordButton} onPress={() => setPasswordVisible(false)} /> : <EyeOff style={styles.showPasswordButton} onPress={() => setPasswordVisible(true)} />}
                         </View>
+                        {signUpError && <ErrorText errorMessage={signUpError} />}
                     </View>
                     <View style={styles.anotherAccountSection}>
                         <Text style={{ fontSize: 20, color: '#4f4e4e', marginBottom: 20 }}>Sign up with another account</Text>
@@ -93,7 +122,8 @@ const styles = StyleSheet.create({
         elevation: 10,
     },
     anotherAccountSection: {
-        marginBlock: 40,
+        marginTop: 100,
+        marginBottom: 40,
         alignItems: 'center',
     },
     anotherAccountImage: {
