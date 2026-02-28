@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    View,
+    ScrollView,
+    TouchableOpacity,
+    Linking
+} from "react-native";
 
 import { Smartphone, Mail, MapPin } from 'lucide-react-native';
 import MapView, { Marker } from "react-native-maps";
@@ -8,6 +15,20 @@ export default function InfoScreen({ navigation }) {
     const aboutPressHandler = () => {
         navigation.navigate('About Us')
     }
+
+    const phonePressHandler = () => {
+        Linking.openURL(`tel:+359123440621`);
+    };
+
+    const emailPressHandler = () => {
+        Linking.openURL(`mailto:example@gmail.com`);
+    };
+
+    const locationPressHandler = () => {
+        const address = encodeURIComponent("Sofia, Bulgaria");
+        Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${address}`);
+    };
+
     return (
         <ScrollView style={{ backgroundColor: '#faf2f2', }}>
             <MapView
@@ -30,7 +51,7 @@ export default function InfoScreen({ navigation }) {
             </MapView>
             <View style={styles.container}>
                 <View style={styles.content}>
-                    <View style={[styles.phone, styles.infoContainers]}>
+                    <TouchableOpacity onPress={phonePressHandler} style={[styles.phone, styles.infoContainers]}>
                         <View>
                             < Smartphone size={30} style={{ color: '#30e418' }} />
                         </View>
@@ -38,8 +59,8 @@ export default function InfoScreen({ navigation }) {
                             <Text style={styles.primaryText}>Give us a call</Text>
                             <Text style={styles.secondaryText}>+359 123 440 621</Text>
                         </View>
-                    </View>
-                    <View style={[styles.infoContainers]}>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={emailPressHandler} style={[styles.infoContainers]}>
                         <View>
                             < Mail size={30} style={{ color: '#30e418' }} />
                         </View>
@@ -47,8 +68,8 @@ export default function InfoScreen({ navigation }) {
                             <Text style={styles.primaryText}>Send us a message</Text>
                             <Text style={styles.secondaryText}>example@gmail.com</Text>
                         </View>
-                    </View>
-                    <View style={[styles.location, styles.infoContainers]}>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={locationPressHandler} style={[styles.location, styles.infoContainers]}>
                         <View>
                             < MapPin size={30} style={{ color: '#30e418' }} />
                         </View>
@@ -56,7 +77,7 @@ export default function InfoScreen({ navigation }) {
                             <Text style={styles.primaryText}>Visit our location</Text>
                             <Text style={styles.secondaryText}>Example, Bulgaria</Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.aboutUsContainer}>
                     <TouchableOpacity onPress={aboutPressHandler} style={{ width: '100%', alignItems: 'center' }}>
@@ -72,7 +93,7 @@ export default function InfoScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        height:'100%',
+        height: '100%',
         justifyContent: 'space-between'
     },
     content: {
