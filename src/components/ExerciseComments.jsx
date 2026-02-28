@@ -22,6 +22,7 @@ export default function ExerciseComments({ onClose, exerciseId, commentsData }) 
 
     const [loadingMore, setLoadingMore] = useState(false);
     const [commentInput, setCommentInput] = useState('');
+    const [error, setError] = useState('');
 
     const PAGE_SIZE = 3;
 
@@ -103,7 +104,7 @@ export default function ExerciseComments({ onClose, exerciseId, commentsData }) 
             await postExerciseCommentById(exerciseId, authState.user.id, commentInput, authState.user.username);
             setCommentInput('')
         } catch (error) {
-            console.log(error.message);
+            setError(error.message);
         }
     }
     return (
@@ -111,6 +112,7 @@ export default function ExerciseComments({ onClose, exerciseId, commentsData }) 
             <View style={styles.welcomeHeaderSection}>
                 <Text style={styles.welcomeHeaderText}>Comments</Text>
                 <TouchableOpacity onPress={onClose}><X size={30} /></TouchableOpacity>
+                {error && <Text style={styles.errorMessage}>{error}</Text>}
             </View>
             {commentsData.length === 0
                 ? <Text style={styles.noComments}>No comments yet</Text>
@@ -128,17 +130,17 @@ export default function ExerciseComments({ onClose, exerciseId, commentsData }) 
                     />
                 )}
             {authState.user &&
-                    <View style={styles.writeCommentSection}>
-                        <TextInput
-                            style={styles.writeCommentInput}
-                            onChangeText={setCommentInput}
-                            value={commentInput}
-                            placeholder="Share your thoughts about this exercise..."
-                        />
-                        <TouchableOpacity onPress={postCommentHandler}>
-                            <SendHorizonal />
-                        </TouchableOpacity>
-                    </View>
+                <View style={styles.writeCommentSection}>
+                    <TextInput
+                        style={styles.writeCommentInput}
+                        onChangeText={setCommentInput}
+                        value={commentInput}
+                        placeholder="Share your thoughts about this exercise..."
+                    />
+                    <TouchableOpacity onPress={postCommentHandler}>
+                        <SendHorizonal />
+                    </TouchableOpacity>
+                </View>
             }
         </View>
     )
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
         fontSize: 25
     },
     profileSection: {
-        marginBottom: 10
+        marginBottom: 10,
     },
     comment: {
         backgroundColor: '#eee',
@@ -180,8 +182,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     noComments: {
-        marginTop: 10,
-        fontStyle: 'italic'
+        position: 'absolute',
+        fontStyle: 'italic',
+        top: '50%',
+        right: '40%'
     },
     deleteCommentSection: {
         flexDirection: 'row',
@@ -211,5 +215,10 @@ const styles = StyleSheet.create({
     },
     writeCommentInput: {
         width: '90%'
+    },
+    errorMessage: {
+        position: 'absolute',
+        bottom: -30,
+        fontSize: 15
     }
 })

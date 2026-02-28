@@ -29,6 +29,7 @@ export default function Details({ route }) {
     const [commentButtonClick, setCommentButtonClicked] = useState(false);
     const scrollViewRef = useRef(null);
     const [likesCount, setLikesCount] = useState(0)
+    const [exerciseError, setExerciseError] = useState('');
 
     const likes = useLikes(exerciseId);
     const comments = useComments(exerciseId);
@@ -47,7 +48,7 @@ export default function Details({ route }) {
                 const result = await getExerciseById(exerciseId);
                 setExercise(result);
             } catch (error) {
-                console.log(error.message);
+                setExerciseError(error.message)
             }
         }
         fetchExercise();
@@ -76,7 +77,10 @@ export default function Details({ route }) {
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.content}>
                         {!exercise ? (
-                            <ActivityIndicator style={{ marginTop: 40 }} size={40} color="#21ef21" />
+                            <>
+                                {exerciseError && <Text style={styles.errorMessage}>{exerciseError}</Text>}
+                                <ActivityIndicator style={{ marginTop: 40, }} size={40} color="#21ef21" />
+                            </>
                         ) : (
                             <>
                                 <Text style={styles.welcomeHeader}>{exercise?.name}</Text>
@@ -138,5 +142,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 20,
         fontFamily: 'serif',
+    },
+    errorMessage: {
+        position: 'absolute',
+        top: 10,
+        fontSize: 20
     }
 })

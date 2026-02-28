@@ -4,6 +4,7 @@ import { Image, StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Key
 import { Eye, EyeOff } from "lucide-react-native";
 
 import { useAuth } from "../contexts/auth/useAuth";
+import ErrorText from "../components/ErrorText";
 
 export default function SignInScreen({ navigation }) {
 
@@ -12,10 +13,27 @@ export default function SignInScreen({ navigation }) {
     const { login } = useAuth()
     const [passwordVisible, setPasswordVisible] = useState(false);
 
+    const [loginError, setLoginError] = useState('');
+
     const signUpPressHandler = () => navigation.navigate('SignUp');
 
     const loginHandler = async () => {
-        await login(email, password)
+        try {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                throw new Error('Invalid email');
+            }
+
+            if (!password) {
+                throw new Error('Password cannot be empty');
+            }
+
+            const result = await login(email, password)
+            if (result === undefined) { throw new Error('Invalid email or password') }
+        } catch (error) {
+            setLoginError(error.message);
+            setTimeout(() => setLoginError(''), 4000);
+        }
     }
 
     return (
@@ -33,8 +51,9 @@ export default function SignInScreen({ navigation }) {
                         <TextInput placeholder='e-mail' value={email} keyboardType="email-address" onChangeText={setEmail} style={styles.inputs} />
                         <View style={{ width: '100%', alignItems: 'center' }}>
                             <TextInput placeholder='password' value={password} secureTextEntry={!passwordVisible} onChangeText={setPassword} style={styles.inputs} />
-                            {passwordVisible ? <Eye style={styles.showPasswordButton} onPress={() => setPasswordVisible(false)} hitSlop={10}/> : <EyeOff style={styles.showPasswordButton} onPress={() => setPasswordVisible(true)} hitSlop={10}/>}
+                            {passwordVisible ? <Eye style={styles.showPasswordButton} onPress={() => setPasswordVisible(false)} hitSlop={10} /> : <EyeOff style={styles.showPasswordButton} onPress={() => setPasswordVisible(true)} hitSlop={10} />}
                         </View>
+                        {loginError && <ErrorText errorMessage={loginError} />}
                     </View>
                     <View style={styles.anotherAccountSection}>
                         <Text style={{ fontSize: 20, color: '#4f4e4e', marginBottom: 20 }}>Sign in with another account</Text>
@@ -106,7 +125,8 @@ const styles = StyleSheet.create({
         elevation: 10,
     },
     anotherAccountSection: {
-        marginBlock: 40,
+        marginTop: 60,
+        marginBottom: 40,
         alignItems: 'center',
     },
     anotherAccountImage: {
