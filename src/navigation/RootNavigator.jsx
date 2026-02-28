@@ -16,23 +16,7 @@ export default function RootNavigator() {
     const Tabs = createBottomTabNavigator();
 
     return (
-        <Tabs.Navigator screenOptions={{ headerShown: false }}>
-            {isAuthenticated
-                ? <Tabs.Screen
-                    name="Profile"
-                    component={ProfileScreen}
-                    options={{
-                        tabBarIcon: () => <CircleUserRound />,
-                    }}
-                />
-                : <Tabs.Screen
-                    name="Sign In"
-                    component={SignInNavigator}
-                    options={{
-                        tabBarIcon: () => <LogIn />,
-                    }}
-                />
-            }
+        <Tabs.Navigator initialRouteName={isAuthenticated ? 'Home' : 'Sign In'} screenOptions={{ headerShown: false }}>
             <Tabs.Screen
                 name="Home"
                 component={HomeNavigator}
@@ -54,6 +38,22 @@ export default function RootNavigator() {
                     tabBarIcon: () => <Info />,
                 }}
             />
+            {isAuthenticated
+                ? <Tabs.Screen
+                    name="Profile"
+                    component={ProfileScreen}
+                    options={{
+                        tabBarIcon: () => <CircleUserRound />,
+                    }}
+                />
+                : <Tabs.Screen
+                    name="Sign In"
+                    component={SignInNavigator}
+                    options={{
+                        tabBarIcon: () => <LogIn />,
+                    }}
+                />
+            }
         </Tabs.Navigator>
     );
 }
