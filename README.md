@@ -74,7 +74,7 @@ Details Screen
 #### Data Source & Backend
 
 Backend Type:
-* Real backend (Firebase or equivalent)
+* Real backend - Firebase
 
 #### Data Operations (CRUD)
 
