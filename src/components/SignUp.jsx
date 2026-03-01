@@ -67,20 +67,6 @@ export default function SignUp() {
                         </View>
                         {signUpError && <ErrorText errorMessage={signUpError} />}
                     </View>
-                    <View style={styles.anotherAccountSection}>
-                        <Text style={{ fontSize: 20, color: '#4f4e4e', marginBottom: 20 }}>Sign up with another account</Text>
-                        <View style={{ flexDirection: 'row', gap: 20 }}>
-                            <TouchableOpacity>
-                                <Image style={styles.anotherAccountImage} source={require('../../assets/google_logo.png')} />
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <Image style={styles.anotherAccountImage} source={require('../../assets/microsoft_logo.png')} />
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <Image style={styles.anotherAccountImage} source={require('../../assets/facebook_logo.png')} />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
                     <View style={styles.buttons}>
                         <TouchableOpacity style={styles.signUpButton} onPress={registerPressHandler}>
                             <Text style={styles.signUpButtonText}>Sign up</Text>
@@ -121,17 +107,9 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         elevation: 10,
     },
-    anotherAccountSection: {
-        marginTop: 100,
-        marginBottom: 40,
-        alignItems: 'center',
-    },
-    anotherAccountImage: {
-        height: 45,
-        width: 45
-    },
     buttons: {
-        width: '75%'
+        width: '75%',
+        marginTop: 40
     },
     signUpButton: {
         backgroundColor: '#42d309',
