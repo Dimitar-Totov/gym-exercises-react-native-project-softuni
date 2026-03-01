@@ -55,20 +55,6 @@ export default function SignInScreen({ navigation }) {
                         </View>
                         {loginError && <ErrorText errorMessage={loginError} />}
                     </View>
-                    <View style={styles.anotherAccountSection}>
-                        <Text style={{ fontSize: 20, color: '#4f4e4e', marginBottom: 20 }}>Sign in with another account</Text>
-                        <View style={{ flexDirection: 'row', gap: 20 }}>
-                            <TouchableOpacity>
-                                <Image style={styles.anotherAccountImage} source={require('../../assets/google_logo.png')} />
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <Image style={styles.anotherAccountImage} source={require('../../assets/microsoft_logo.png')} />
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <Image style={styles.anotherAccountImage} source={require('../../assets/facebook_logo.png')} />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
                     <View style={styles.buttons}>
                         <TouchableOpacity style={styles.signInButton} onPress={loginHandler}>
                             <Text style={styles.signInButtonText}>Sign in</Text>
@@ -124,17 +110,9 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         elevation: 10,
     },
-    anotherAccountSection: {
-        marginTop: 60,
-        marginBottom: 40,
-        alignItems: 'center',
-    },
-    anotherAccountImage: {
-        height: 45,
-        width: 45
-    },
     buttons: {
-        width: '75%'
+        width: '75%',
+        marginTop: 40,
     },
     signInButton: {
         backgroundColor: '#42d309',
