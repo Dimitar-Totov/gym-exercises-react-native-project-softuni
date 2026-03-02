@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     },
     buttons: {
         width: '75%',
-        marginTop: 40,
+        marginTop: 50,
     },
     signInButton: {
         backgroundColor: '#42d309',

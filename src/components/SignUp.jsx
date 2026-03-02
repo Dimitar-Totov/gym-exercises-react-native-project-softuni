@@ -30,7 +30,7 @@ export default function SignUp() {
             }
 
             if (!passwordValidator.test(password)) {
-                throw new Error('Password must be at least 6 characters long and include at least uppercase letter, lowercase letter, number, and special character');
+                throw new Error('Password must be at least 6 characters long and include at least uppercase letter, lowercase letter, number, and one special character');
             }
 
             if (password !== rePassword) {
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     },
     buttons: {
         width: '75%',
-        marginTop: 40
+        marginTop: 50
     },
     signUpButton: {
         backgroundColor: '#42d309',

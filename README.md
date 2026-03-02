@@ -111,7 +111,7 @@ Describe at least three validated fields:
 2. Field name and rules: 
 * username, Length should be more than 2 characters.
 3. Field name with multiple validation rules:
-* password, Password must be at least 6 characters long and include at least uppercase letter, lowercase letter, number, and special character
+* password, Password must be at least 6 characters long and include at least uppercase letter, lowercase letter, number, and one special character
 
 #### Native Device Features
 
