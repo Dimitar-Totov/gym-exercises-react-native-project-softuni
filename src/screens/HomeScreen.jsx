@@ -60,9 +60,13 @@ export default function HomeScreen({ navigation }) {
         <SafeAreaView style={{ flex: 1 }} edges={[]}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    behavior={Platform.OS === "ios" ? "padding" : "position"}
+                    keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 80}
                 >
-                    <ScrollView keyboardDismissMode="on-drag">
+                    <ScrollView
+                        keyboardDismissMode="on-drag"
+                        keyboardShouldPersistTaps="handled"
+                    >
                         <View style={styles.mainContainer}>
                             <View>
                                 <Text style={styles.welcomeHeader}>Your goals start here. Let's crush them</Text>
