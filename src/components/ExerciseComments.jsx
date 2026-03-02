@@ -7,7 +7,8 @@ import {
     ActivityIndicator,
     TextInput,
     KeyboardAvoidingView,
-    Platform
+    Platform,
+    Image
 } from "react-native";
 
 import { X, SendHorizonal } from "lucide-react-native";
@@ -85,9 +86,12 @@ export default function ExerciseComments({ onClose, exerciseId, commentsData }) 
     }
     const renderItem = ({ item }) => (
         <View style={styles.profileSection}>
-            <View style={styles.comment}>
-                <Text style={styles.author}>{item.username}</Text>
-                <Text>{item.comment}</Text>
+            <View style={styles.user}>
+                <Image style={styles.profileImage} source={{ uri: item.profileImage }} />
+                <View style={styles.comment}>
+                    <Text style={styles.author}>{item.username}</Text>
+                    <Text>{item.comment}</Text>
+                </View>
             </View>
             <View style={styles.deleteCommentSection}>
                 <Text>
@@ -101,7 +105,7 @@ export default function ExerciseComments({ onClose, exerciseId, commentsData }) 
     const postCommentHandler = async () => {
         if (commentInput.length === 0) return;
         try {
-            await postExerciseCommentById(exerciseId, authState.user.id, commentInput, authState.user.username);
+            await postExerciseCommentById(exerciseId, authState.user.id, commentInput, authState.user.username, authState.user.profileImage);
             setCommentInput('')
         } catch (error) {
             setError(error.message);
@@ -169,7 +173,7 @@ const styles = StyleSheet.create({
         fontSize: 25
     },
     profileSection: {
-        marginBottom: 10,
+        marginBottom: 20,
     },
     comment: {
         backgroundColor: '#eee',
@@ -191,7 +195,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 15,
-        paddingLeft: 6,
+        paddingLeft: 50,
         marginTop: 2
     },
     writeCommentSection: {
@@ -220,5 +224,14 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: -30,
         fontSize: 15
+    },
+    user: {
+        flexDirection: 'row',
+        gap: 6
+    },
+    profileImage: {
+        height: 40,
+        width: 40,
+        borderRadius: 40
     }
 })

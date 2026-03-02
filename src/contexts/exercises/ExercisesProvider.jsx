@@ -7,7 +7,7 @@ export const ExerciseContext = createContext({
     getExerciseById: async (exerciseId) => { },
     getThreeMostLikedExercises: async () => { },
     getExerciseByInput: async (exerciseId) => { },
-    postExerciseCommentById: async (exerciseId, userId, comment, username) => { },
+    postExerciseCommentById: async (exerciseId, userId, comment, username, profileImage) => { },
     deleteExerciseCommentById: async (exerciseId, commentId) => { },
     toggleLikes: async (exerciseId, userId) => { }
 });
@@ -19,7 +19,7 @@ export function ExercisesProvider({ children }) {
     const getExerciseByInput = async (input) => await exerciseService.getByInput(input);
     const getThreeMostLikedExercises = async () => await exerciseService.getTop3Exercises();
 
-    const postExerciseCommentById = async (exerciseId, userId, comment, username) => commentsService.addComment(exerciseId, userId, comment, username);
+    const postExerciseCommentById = async (exerciseId, userId, comment, username, profileImage) => commentsService.addComment(exerciseId, userId, comment, username, profileImage);
     const deleteExerciseCommentById = async (exerciseId, commentId) => commentsService.deleteExerciseCommentById(exerciseId, commentId);
 
     const toggleLikes = async (exerciseId, userId) => likesService.toggleLikes(exerciseId, userId);

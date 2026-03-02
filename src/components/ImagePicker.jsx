@@ -38,12 +38,13 @@ export default function ImagePicker({
             <TouchableOpacity style={styles.picker} onPress={pickImageHandler}>
                 {profileImage
                     ? <Image source={{ uri: profileImage }} style={styles.image} />
-                    : (
-                        <View style={styles.placeholder}>
-                            <Ionicons name="images-outline" size={48} color="#40e12a" />
-                            <Text style={styles.placeholderText}>Tap to select from gallery</Text>
-                        </View>
-                    )}
+                    : imageUri ? <Image source={{ uri: imageUri }} style={styles.image} />
+                        : (
+                            <View style={styles.placeholder}>
+                                <Ionicons name="images-outline" size={48} color="#40e12a" />
+                                <Text style={styles.placeholderText}>Tap to select from gallery</Text>
+                            </View>
+                        )}
             </TouchableOpacity>
 
             {(imageUri || profileImage) && (

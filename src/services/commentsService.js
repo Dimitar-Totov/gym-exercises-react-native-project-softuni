@@ -8,7 +8,7 @@ import {
 
 import { database } from "../firebaseConfig";
 
-export async function addComment(exerciseId, userId, comment, username) {
+export async function addComment(exerciseId, userId, comment, username, profileImage) {
     const commentsRef = collection(database, "exercises", exerciseId, "comments");
 
     await addDoc(commentsRef, {
@@ -16,6 +16,7 @@ export async function addComment(exerciseId, userId, comment, username) {
         username,
         comment,
         createdAt: serverTimestamp(),
+        profileImage,
     });
 }
 
