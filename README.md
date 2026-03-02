@@ -117,6 +117,11 @@ Describe at least three validated fields:
 
 Used Native Feature(s)
 - Image Picker
+- Camera Capture
+- Open phone 
+- Open email
+- Open android map
+
 
 Usage Description
 

@@ -1,45 +1,39 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Pressable, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-import { CalendarPlus, ChevronRight, LogOut, Settings, UserPen } from "lucide-react-native";
-import * as ImagePicker from "expo-image-picker";
+import { CalendarPlus, ChevronRight, LogOut, UserPen } from "lucide-react-native";
 
 import { useAuth } from "../contexts/auth/useAuth";
 import EditProfileModal from "../components/EditProfileModal";
+import ImagePicker from "../components/ImagePicker";
+import CameraCapture from "../components/CameraCapture";
+import { uploadProfileImage } from "../services/profileService";
 
 export default function ProfileScreen() {
-    const [image, setImage] = useState(null);
+    const [imageUri, setImageUri] = useState(null);
     const { authState, logout } = useAuth();
     const [isEditFieldVisible, setIsEditFieldVisible] = useState(false);
+    const [error, setError] = useState(null);
 
-    const pickImage = async () => {
-        const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (!permission.granted) {
-            alert("Permission required to access photos.");
-            return;
+    useEffect(() => {
+        if (!imageUri) return
+        async function addProfileImage() {
+            try {
+                await uploadProfileImage(authState.user.id, imageUri);
+            } catch (error) {
+                setError(error.message);
+            }
         }
-
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ['images'],
-            allowsEditing: true,
-            quality: 1,
-        });
-
-        if (!result.canceled) {
-            setImage(result.assets[0].uri);
-        }
-    };
+        addProfileImage()
+    }, [imageUri])
 
     return (
         <View style={styles.container}>
             {isEditFieldVisible && <EditProfileModal onClose={() => setIsEditFieldVisible(false)} userData={authState.user} />}
-            <Pressable style={styles.imageWrapper} onPress={pickImage}>
-                {image ? (
-                    <Image source={{ uri: image }} style={styles.profileImage} />
-                ) : (
-                    <Text style={styles.placeholderText}>Upload Photo</Text>
-                )}
-            </Pressable>
+            <View style={styles.imageContainer}>
+                <ImagePicker onImagePicked={setImageUri} imageUri={imageUri} profileImage={authState.user.profileImage} />
+                <CameraCapture onPhotoTaken={setImageUri} />
+            </View>
             <View style={styles.userSection}>
                 <Text style={styles.username}>{authState.user.username}</Text>
                 <Text style={styles.email}>{authState.user.email}</Text>
@@ -67,6 +61,7 @@ export default function ProfileScreen() {
                         <Text style={[styles.optionText, { color: 'red' }]}>Logout</Text>
                     </View>
                 </TouchableOpacity>
+                {error && <Text style={styles.errorMessage}>{error}</Text>}
             </View>
         </View>
     )
@@ -78,20 +73,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
     },
-    imageWrapper: {
-        width: 140,
-        height: 140,
-        borderRadius: 70,
-        backgroundColor: "#d0d0d0",
-        justifyContent: "center",
-        alignItems: "center",
-        marginBottom: 30,
-        marginTop: 100,
-        overflow: "hidden",
-    },
-    profileImage: {
-        width: "100%",
-        height: "100%",
+    imageContainer: {
+        width: '100%'
     },
     placeholderText: {
         color: "#555",
@@ -139,5 +122,8 @@ const styles = StyleSheet.create({
     },
     optionIcons: {
         color: '#026702',
+    },
+    errorMessage: {
+        fontSize: 30, 
     }
 })

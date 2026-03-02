@@ -4,10 +4,9 @@ import {
     updateProfile,
     updatePassword,
 } from "firebase/auth";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import * as FileSystem from "expo-file-system";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-import { auth } from "../firebaseConfig";
+import { auth, storage } from "../firebaseConfig";
 
 export async function updateUser(username, password, currentPassword) {
     const user = auth.currentUser;
@@ -25,18 +24,18 @@ export async function updateUser(username, password, currentPassword) {
     return user;
 }
 
-export async function uploadProfileImage(userId, localUri) {
-    try {
-        const file = await FileSystem.readAsStringAsync(localUri, {
-            encoding: FileSystem.EncodingType.Base64,
-        });
-        const blob = Buffer.from(file, "base64");
-        const imageRef = ref(storage, `profileImages/${userId}.jpg`);
-        await uploadBytes(imageRef, blob);
-        const downloadUrl = await getDownloadURL(imageRef);
-        return downloadUrl;
-    } catch (err) {
-        console.log("Upload error:", err);
-        throw new Error("Failed to upload profile image.");
-    }
+export async function uploadProfileImage(userId, imageUri) {
+
+    const response = await fetch(imageUri);
+    const imageBlob = await response.blob();
+
+    const imageRef = ref(storage, `userImage/${userId}.jpg`);
+    await uploadBytes(imageRef, imageBlob);
+}
+
+export async function loadProfileImage(userId) {
+    const imageRef = ref(storage, `userImage/${userId}.jpg`);
+    const imageUrl = await getDownloadURL(imageRef);
+
+    return imageUrl;
 }

@@ -21,13 +21,18 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                setAuthState({
-                    user: {
-                        id: user.uid,
-                        email: user.email,
-                        username: user.displayName,
-                    }
-                });
+                async function loadImage() {
+                    const profileImage = await profileService.loadProfileImage(user.uid)
+                    setAuthState({
+                        user: {
+                            id: user.uid,
+                            email: user.email,
+                            username: user.displayName,
+                            profileImage: profileImage ? profileImage : null,
+                        }
+                    });
+                }
+                loadImage()
             } else {
                 setAuthState({ user: null });
             }
@@ -38,6 +43,7 @@ export function AuthProvider({ children }) {
     const login = async (email, password) => {
         try {
             const user = await authService.login(email, password);
+
             setAuthState({
                 user: {
                     id: user.uid,
