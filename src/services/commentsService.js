@@ -11,13 +11,18 @@ import { database } from "../firebaseConfig";
 export async function addComment(exerciseId, userId, comment, username, profileImage) {
     const commentsRef = collection(database, "exercises", exerciseId, "comments");
 
-    await addDoc(commentsRef, {
+    const data = {
         userId,
         username,
         comment,
         createdAt: serverTimestamp(),
-        profileImage,
-    });
+    }
+
+    if (profileImage) {
+        data.profileImage = profileImage;
+    }
+
+    await addDoc(commentsRef, data);
 }
 
 export async function deleteExerciseCommentById(exerciseId, commentId) {
