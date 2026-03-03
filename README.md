@@ -1,7 +1,7 @@
 # Softuni React Native project
 
 ## Apk link:
-- https://drive.google.com/file/d/14zlI3Plfvn3VM1Z_m--4Ol3b4M5I7_bT/view?usp=drive_link
+- https://drive.google.com/file/d/1gCaibBUrmw9eKwNWxO_dbklLf0oHGm2U/view?usp=drive_link
 
 ## Instructions for build & run the project
 1. Clone the repo
