@@ -8,11 +8,13 @@ import EditProfileModal from "../components/EditProfileModal";
 import ImagePicker from "../components/ImagePicker";
 import CameraCapture from "../components/CameraCapture";
 import { uploadProfileImage } from "../services/profileService";
+import UserWeightModal from "../components/UserWeightModal";
 
 export default function ProfileScreen() {
     const [imageUri, setImageUri] = useState(null);
     const { authState, logout } = useAuth();
-    const [isEditFieldVisible, setIsEditFieldVisible] = useState(false);
+    const [editModalVisible, setEditModalVisible] = useState(false);
+    const [weightModalVisible, setWeightModalVisible] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -29,7 +31,8 @@ export default function ProfileScreen() {
 
     return (
         <View style={styles.container}>
-            {isEditFieldVisible && <EditProfileModal onClose={() => setIsEditFieldVisible(false)} userData={authState.user} />}
+            {editModalVisible && <EditProfileModal onClose={() => setEditModalVisible(false)} userData={authState.user} />}
+            {weightModalVisible && <UserWeightModal onClose={() => setWeightModalVisible(false)} username={authState.user.username} />}
             <View style={styles.imageContainer}>
                 <ImagePicker onImagePicked={setImageUri} imageUri={imageUri} profileImage={authState.user.profileImage} />
                 <CameraCapture onPhotoTaken={setImageUri} />
@@ -39,7 +42,7 @@ export default function ProfileScreen() {
                 <Text style={styles.email}>{authState.user.email}</Text>
             </View>
             <View style={styles.optionsSection}>
-                <TouchableOpacity onPress={() => setIsEditFieldVisible(true)}>
+                <TouchableOpacity onPress={() => setEditModalVisible(true)}>
                     <View style={styles.optionContainer}>
                         <View style={styles.option}>
                             <UserPen color={styles.optionIcons.color} />
@@ -48,13 +51,13 @@ export default function ProfileScreen() {
                         <ChevronRight color={styles.optionIcons.color} />
                     </View>
                 </TouchableOpacity>
-                <View style={styles.optionContainer}>
+                <TouchableOpacity onPress={() => setWeightModalVisible(true)} style={styles.optionContainer}>
                     <View style={styles.option}>
                         <CalendarPlus color={styles.optionIcons.color} />
                         <Text style={styles.optionText}>Add today's weight</Text>
                     </View>
                     <ChevronRight color={styles.optionIcons.color} />
-                </View>
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.optionContainer} onPress={logout}>
                     <View style={styles.option}>
                         <LogOut color={'red'} />
@@ -124,6 +127,6 @@ const styles = StyleSheet.create({
         color: '#026702',
     },
     errorMessage: {
-        fontSize: 30, 
+        fontSize: 30,
     }
 })
