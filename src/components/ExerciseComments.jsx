@@ -24,7 +24,7 @@ export default function ExerciseComments({ onClose, exerciseId, commentsData }) 
     const [loadingMore, setLoadingMore] = useState(false);
     const [commentInput, setCommentInput] = useState('');
     const [error, setError] = useState('');
-
+    const [inputFocused,setInputFocused] = useState(false)
     const PAGE_SIZE = 3;
 
     const [page, setPage] = useState(1);
@@ -112,7 +112,7 @@ export default function ExerciseComments({ onClose, exerciseId, commentsData }) 
         }
     }
     return (
-        <View style={styles.commentsContainer}>
+        <View style={[styles.commentsContainer,{bottom: inputFocused ? 215 : 0}]}>
             <View style={styles.welcomeHeaderSection}>
                 <Text style={styles.welcomeHeaderText}>Comments</Text>
                 <TouchableOpacity onPress={onClose}><X size={30} /></TouchableOpacity>
@@ -140,6 +140,8 @@ export default function ExerciseComments({ onClose, exerciseId, commentsData }) 
                         onChangeText={setCommentInput}
                         value={commentInput}
                         placeholder="Share your thoughts about this exercise..."
+                        onFocus={() => setInputFocused(true)}
+                        onBlur={() => setInputFocused(false)}
                     />
                     <TouchableOpacity onPress={postCommentHandler}>
                         <SendHorizonal />
@@ -153,8 +155,6 @@ export default function ExerciseComments({ onClose, exerciseId, commentsData }) 
 const styles = StyleSheet.create({
     commentsContainer: {
         position: 'absolute',
-        position: 'absolute',
-        bottom: 0,
         backgroundColor: '#fff',
         height: '50%',
         width: '100%',
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     welcomeHeaderSection: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 15,
+        marginBottom: 30,
     },
     welcomeHeaderText: {
         fontWeight: 'bold',
