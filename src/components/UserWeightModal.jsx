@@ -5,20 +5,69 @@ import {
     TouchableOpacity,
     TextInput,
     TouchableWithoutFeedback,
-    Keyboard
+    Keyboard,
+    FlatList
 } from "react-native";
+import { useEffect, useState } from "react";
 
 import { X } from "lucide-react-native";
 
-export default function UserWeightModal({ onClose, username }) {
+import { addWeight, getWeights } from "../services/weightService";
+import { useLastWeight } from "../hooks/useLastWeight";
 
+export default function UserWeightModal({ onClose, userData }) {
+    const [currentWeight, setCurrentWeight] = useState(0);
+    const [allWeights, setAllWeights] = useState([]);
+    const [error, setError] = useState('');
+    const lastWeight = useLastWeight(userData.id);
 
+    const addWeightPressHandler = async () => {
+        if (currentWeight <= 0) {
+            setError('Please enter valid kilograms')
+            setTimeout(() => setError(''), 4000)
+            return;
+        };
+
+        try {
+            const date = new Date().toISOString().split("T")[0];
+            await addWeight(userData.id, date, currentWeight);
+            setCurrentWeight(0)
+        } catch (error) {
+            setError(error.message);
+        }
+    }
+
+    const listAllWeightsPressHandler = async () => {
+        try {
+            const result = await getWeights(userData.id)
+            setAllWeights(result);
+        } catch (error) {
+            setError(error.message)
+        }
+    }
+
+    const renderItem = ({ item }) => (
+        <View
+            style={{
+                padding: 15,
+                borderBottomWidth: 1,
+                borderColor: "#ddd",
+                flexDirection: "row",
+                justifyContent: "space-between"
+            }}
+        >
+            <Text style={{ fontSize: 16 }}>{item.date}</Text>
+            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                {item.weight} kg
+            </Text>
+        </View>
+    );
     return (
         <View style={styles.overlay}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.kilogramsContainer}>
                     <View style={styles.header}>
-                        <Text style={styles.title}>{username}'s Weight Tracker</Text>
+                        <Text style={styles.title}>{userData.username}'s Weight Tracker</Text>
                         <TouchableOpacity onPress={onClose}>
                             <X size={28} color="#333" />
                         </TouchableOpacity>
@@ -26,18 +75,26 @@ export default function UserWeightModal({ onClose, username }) {
                     <View style={styles.content}>
                         <View style={styles.lastWeightSection}>
                             <Text style={{ fontSize: 20, color: '#434242' }}>Your last weight:</Text>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#3e3e3e' }}>78kg's</Text>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#3e3e3e' }}>{lastWeight.weight}kg's</Text>
                         </View>
                     </View>
                     <View style={styles.submitContainer}>
-                        <TextInput keyboardType="numeric" style={styles.addWeightInput} placeholder="Enter your current weight in kilograms" />
-                        <TouchableOpacity style={styles.button}><Text style={{fontWeight: '500'}}>Add</Text></TouchableOpacity>
+                        <TextInput keyboardType="numeric" value={currentWeight} onChangeText={setCurrentWeight} style={styles.addWeightInput} placeholder="Enter your current weight in kilograms" />
+                        <TouchableOpacity onPress={addWeightPressHandler} style={styles.button}><Text style={{ fontWeight: '500' }}>Add</Text></TouchableOpacity>
+                        {error && <Text style={styles.error}>{error}</Text>}
                     </View>
                     <View style={styles.weightHistorySection}>
-                        <View style={{alignItems: 'center',gap: 15}}>
-                            <Text style={{fontSize: 16,fontWeight: '500'}}>Do you want to see your weight history ?</Text>
-                            <TouchableOpacity style={styles.button}><Text style={{fontWeight: '500'}}>Click Here</Text></TouchableOpacity>
+                        <View style={{ alignItems: 'center', gap: 15 }}>
+                            <Text style={{ fontSize: 16, fontWeight: '500' }}>Do you want to see your weight history ?</Text>
+                            <TouchableOpacity onPress={listAllWeightsPressHandler} style={styles.button}><Text style={{ fontWeight: '500' }}>Click Here</Text></TouchableOpacity>
                         </View>
+                    </View>
+                    <View style={styles.flatlistWrapper}>
+                        <FlatList
+                            data={allWeights}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={renderItem}
+                        />
                     </View>
                 </View>
             </TouchableWithoutFeedback>
@@ -91,7 +148,8 @@ const styles = StyleSheet.create({
     },
     addWeightInput: {
         borderBottomColor: '#80f490',
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        width: '75%'
     },
     label: {
         fontWeight: 'bold',
@@ -133,8 +191,14 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 10
     },
-    weightHistorySection: {
-
+    flatlistWrapper: {
+        height: 200
     },
-
+    error: {
+        position: 'absolute',
+        bottom: -25,
+        left: 36,
+        color: 'red',
+        fontWeight: '500'
+    }
 });

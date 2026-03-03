@@ -32,7 +32,7 @@ export default function ProfileScreen() {
     return (
         <View style={styles.container}>
             {editModalVisible && <EditProfileModal onClose={() => setEditModalVisible(false)} userData={authState.user} />}
-            {weightModalVisible && <UserWeightModal onClose={() => setWeightModalVisible(false)} username={authState.user.username} />}
+            {weightModalVisible && <UserWeightModal onClose={() => setWeightModalVisible(false)} userData={authState.user} />}
             <View style={styles.imageContainer}>
                 <ImagePicker onImagePicked={setImageUri} imageUri={imageUri} profileImage={authState.user.profileImage} />
                 <CameraCapture onPhotoTaken={setImageUri} />
