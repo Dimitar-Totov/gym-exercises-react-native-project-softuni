@@ -21,12 +21,8 @@ export async function addComment(exerciseId, userId, comment, username, profileI
 }
 
 export async function deleteExerciseCommentById(exerciseId, commentId) {
-    try {
-        const ref = doc(database, "exercises", exerciseId, "comments", commentId);
-        await deleteDoc(ref);
-        return true;
-    } catch (error) {
-        console.log("Delete comment error:", error.message);
-    }
+    const ref = doc(database, "exercises", exerciseId, "comments", commentId);
+    await deleteDoc(ref);
+    return true;
 }
 

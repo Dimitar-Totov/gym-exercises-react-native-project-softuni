@@ -81,7 +81,7 @@ export default function ExerciseComments({ onClose, exerciseId, commentsData }) 
         try {
             await deleteExerciseCommentById(exerciseId, commentId);
         } catch (err) {
-            console.log(err.message);
+            setError(err.message)
         }
     }
     const renderItem = ({ item }) => (
