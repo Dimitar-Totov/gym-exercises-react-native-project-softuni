@@ -1,7 +1,19 @@
 # Softuni React Native project
 
+## Apk link:
+- https://drive.google.com/file/d/14zlI3Plfvn3VM1Z_m--4Ol3b4M5I7_bT/view?usp=drive_link
+
+## Instructions for build & run the project
+1. Clone the repo
+2. Run in terminal `npm install` to install all packages 
+3. Run in terminal `npm run prebuild` to create android folder
+4. Then go to android/app/src/main/AndroidManifest.xml and put `<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBuGptnR2JbfP92uMiPAdHGx1zIUi45iTs"/>`
+5. To open app with Expo run in terminal `npm run start`
+6. For development build (Must have Android Studio & Android Emulator) run in terminal `npm run android`
+
 ### Application Name:
 Gym Exercises
+
 ### Main Purpose:
 The main purpose of the app is to educate users about gym exercises. The app is providing reliable information and resources to help every user before enter the gym. 
 
