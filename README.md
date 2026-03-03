@@ -135,13 +135,17 @@ Used Native Feature(s)
 - Open email
 - Open android map
 
-
 Usage Description
 
 1. Where is it used?
-* In profile screen
+* In profile screen - Image Picker and Camera Capture
+* In info sreen - open phone,email, and map.
 2. What functionality does it provide?
 * The application uses an Image Picker to allow users to select images from their device’s gallery. This feature provides a simple way for users to upload images, which can be used for profile picture.
+* Camera Capture allows your app to access the device camera to take a photo or record a video.
+* Phone lets your app initiate a phone call or open the phone dialer.
+* Email opens the device’s default email client.
+* Map show a location, provide directions, or search nearby places.
 #### Typical User Flow
 
 Describe a normal user journey through the app: 
