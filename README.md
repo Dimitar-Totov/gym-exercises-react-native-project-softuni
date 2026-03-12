@@ -7,8 +7,7 @@
 1. Clone the repo
 2. Run in terminal `npm install` to install all packages 
 3. Run in terminal `npm run prebuild` to create android folder
-4. Then go to android/app/src/main/AndroidManifest.xml and put `<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBuGptnR2JbfP92uMiPAdHGx1zIUi45iTs"/>` above the activity tag 
-5. To open app:
+4. To open app:
 - with Expo run `npm run start` and scan the barcode from your terminal with your camera
 - to run in development build (Must have Android Studio & Android Emulator) type in terminal `npm run android`
 
